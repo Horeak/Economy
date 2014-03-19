@@ -1,0 +1,21 @@
+[
+{
+  "modid": "eco",
+  "name": "Economy",
+  "description": "This is a mod which is meant to add a Economy system to minecraft",
+  "version": "@VERSION@",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "tm1990"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  "MinecraftForge"
+  ]
+}
+]

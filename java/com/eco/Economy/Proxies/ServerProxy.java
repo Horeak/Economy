@@ -65,4 +65,10 @@ public class ServerProxy {
     }
 
 
+    public void RegisterRenders(){
+
+
+    }
+
+
 }

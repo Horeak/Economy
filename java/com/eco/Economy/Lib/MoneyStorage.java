@@ -68,14 +68,14 @@ public class MoneyStorage implements IExtendedEntityProperties
 
     public void AddMoney(int Amount)
     {
-        Money += (Amount * (MoneyUtils.Multiplier + 1));
+        Money += (Amount * (MoneyUtils.Multiplier));
 
         Economy.packetPipeline.sendTo(new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
     }
 
     public void RemoveMoney(int Amount){
 
-        Money -= (Amount * (MoneyUtils.Multiplier + 1));
+        Money -= (Amount * (MoneyUtils.Multiplier));
         if(Money < 0)
             Money = 0;
 

@@ -1,6 +1,7 @@
 package com.eco.Economy.Main;
 
 
+import com.eco.Economy.Blocks.ModBlockRegistry;
 import com.eco.Economy.Event.EntityConstructingEvent;
 import com.eco.Economy.Event.JoinWorld;
 import com.eco.Economy.Event.OnPlayerRespawn;
@@ -17,6 +18,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
@@ -36,6 +41,17 @@ public class Economy {
 
 
 
+    public static net.minecraft.creativetab.CreativeTabs ModTab = new net.minecraft.creativetab.CreativeTabs("tabEconomy")
+    {
+        @Override
+        @SideOnly(Side.CLIENT)
+        public Item getTabIconItem()
+        {
+           return ItemBlock.getItemFromBlock(ModBlockRegistry.ATM);
+        }
+
+    };
+
 
     public static Configuration config;
 
@@ -51,16 +67,23 @@ public class Economy {
         MoneyUtils.MoneyMark = config.get("Client Settings", "What sign should be used for money?", "$").getString();
         MoneyUtils.TextArea = config.get("Client Settings", "Where on the screen should the money be showed?  top_right = 1  top_left = 2  bottom_right = 3  bottom_left = 4  Mode", 1).getInt();
 
-        MoneyUtils.Multiplier = config.get("Server Settings", "What should be the multiplier for money? (used for changing currency)", 0).getInt();
+        MoneyUtils.Multiplier = config.get("Server Settings", "What should be the multiplier for money? (used for changing currency)", 1).getInt();
         MoneyUtils.StarterMoney = config.get("Server Settings", "What amount of money should new players start with?", 1000).getInt();
 
 
 
+        if(MoneyUtils.Multiplier < 1)
+            MoneyUtils.Multiplier = 1;
+
         config.save();
 
 
+        ModBlockRegistry.Register();
+
         proxy.RegisterClientTick();
         proxy.RegisterServerTick();
+
+        proxy.RegisterRenders();
 
 
         MinecraftForge.EVENT_BUS.register(new EntityConstructingEvent());

@@ -96,7 +96,7 @@ public class BlockATM extends BlockContainer {
     }
 
     public void registerBlockIcons(IIconRegister icon) {
-        this.blockIcon = icon.registerIcon(ModInfo.ModId + ":" + "ATM");
+        this.blockIcon = icon.registerIcon(ModInfo.ModTextures + ":" + "ATM");
     }
 
 

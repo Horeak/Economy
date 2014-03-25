@@ -9,9 +9,6 @@ public class TileEntityATM extends TileEntity {
 
    public boolean top;
 
-    public boolean IsTopBlock(){
-        return top;
-    }
 
 
     public void writeToNBT(NBTTagCompound nbt)

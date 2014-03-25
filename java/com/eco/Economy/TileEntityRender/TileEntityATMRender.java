@@ -37,7 +37,7 @@ public class TileEntityATMRender extends TileEntitySpecialRenderer {
             GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
 
 
-            bindTexture(new ResourceLocation(ModInfo.ModName.toLowerCase() , "textures/models/ATM.png"));
+            bindTexture(new ResourceLocation(ModInfo.ModTextures , "textures/models/ATM.png"));
 
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);

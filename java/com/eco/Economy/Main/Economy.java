@@ -6,6 +6,7 @@ import com.eco.Economy.Event.EntityConstructingEvent;
 import com.eco.Economy.Event.JoinWorld;
 import com.eco.Economy.Event.OnPlayerRespawn;
 import com.eco.Economy.Gui.MoneyOverlay;
+import com.eco.Economy.Items.ModItemRegistry;
 import com.eco.Economy.Lib.ModInfo;
 import com.eco.Economy.Lib.MoneyUtils;
 import com.eco.Economy.Network.PacketPipeline;
@@ -79,6 +80,7 @@ public class Economy {
 
 
         ModBlockRegistry.Register();
+        ModItemRegistry.Register();
 
         proxy.RegisterClientTick();
         proxy.RegisterServerTick();

@@ -48,7 +48,7 @@ public class ATMItemRender implements IItemRenderer
         GL11.glTranslatef((float) 0.5F, (float) 1.4F, (float) 0.5F);
 
 
-        Minecraft.getMinecraft().getTextureManager(). bindTexture(new ResourceLocation(ModInfo.ModName.toLowerCase(), "textures/models/ATM.png"));
+        Minecraft.getMinecraft().getTextureManager(). bindTexture(new ResourceLocation(ModInfo.ModTextures, "textures/models/ATM.png"));
 
 
         GL11.glPushMatrix();

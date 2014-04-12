@@ -5,11 +5,14 @@ import com.eco.Economy.Blocks.ModBlockRegistry;
 import com.eco.Economy.Event.EntityConstructingEvent;
 import com.eco.Economy.Event.JoinWorld;
 import com.eco.Economy.Event.OnPlayerRespawn;
+import com.eco.Economy.Event.PreventBlockBreakEvent;
+import com.eco.Economy.Gui.GuiHandler;
 import com.eco.Economy.Gui.MoneyOverlay;
 import com.eco.Economy.Items.ModItemRegistry;
 import com.eco.Economy.Lib.ModInfo;
 import com.eco.Economy.Lib.MoneyUtils;
 import com.eco.Economy.Network.PacketPipeline;
+import com.eco.Economy.Network.Simple.NetworkManager;
 import com.eco.Economy.Proxies.ServerProxy;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -18,6 +21,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.init.Blocks;
@@ -42,6 +46,8 @@ public class Economy {
 
 
 
+    public static NetworkManager NETWORK_MANAGER;
+
     public static net.minecraft.creativetab.CreativeTabs ModTab = new net.minecraft.creativetab.CreativeTabs("tabEconomy")
     {
         @Override
@@ -65,11 +71,25 @@ public class Economy {
         config = new Configuration(new File(event.getModConfigurationDirectory() + "/tm1990's mods/Economy.cfg"));
 
 
+        if(event.getSide() == Side.CLIENT){
         MoneyUtils.MoneyMark = config.get("Client Settings", "What sign should be used for money?", "$").getString();
         MoneyUtils.TextArea = config.get("Client Settings", "Where on the screen should the money be showed?  top_right = 1  top_left = 2  bottom_right = 3  bottom_left = 4  Mode", 1).getInt();
+        MoneyUtils.CurrencyName = config.get("Client Settings", "What should the currency be called? (null for nothing)(default=null)", "null").getString();
+
+
+
+        }
+
+
+
 
         MoneyUtils.Multiplier = config.get("Server Settings", "What should be the multiplier for money? (used for changing currency)", 1).getInt();
         MoneyUtils.StarterMoney = config.get("Server Settings", "What amount of money should new players start with?", 1000).getInt();
+        MoneyUtils.MaxMoneyTransfer = config.get("Server Settings", "What should the max amount of money being transferred at once be?", 100000).getInt();
+
+
+
+
 
 
 
@@ -111,6 +131,9 @@ public class Economy {
         packetPipeline.initialise();
 
 
+        NETWORK_MANAGER = new NetworkManager();
+
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
 
     }
@@ -131,6 +154,8 @@ public class Economy {
 
 
         FMLCommonHandler.instance().bus().register(proxy.tickHandlerServer);
+
+        MinecraftForge.EVENT_BUS.register(new PreventBlockBreakEvent());
 
 
 

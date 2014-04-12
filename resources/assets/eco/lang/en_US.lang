@@ -1,3 +1,11 @@
 itemGroup.tabEconomy=Economy
 
 tile.atm.name=ATM
+tile.safe.name=Safe
+
+gui.safe=Safe
+
+//TODO readd later
+gui.safe.Owner=Owner:
+
+message.safe.wrongOwner=This safe belongs to $Owner$!

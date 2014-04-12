@@ -1,6 +1,7 @@
 package com.eco.Economy.Tick;
 
 import com.eco.Economy.Lib.MoneyStorage;
+import com.eco.Economy.Lib.MoneyUtils;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 

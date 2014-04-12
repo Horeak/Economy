@@ -1,6 +1,7 @@
 package com.eco.Economy.Blocks;
 
 import com.eco.Economy.Lib.ModInfo;
+import com.eco.Economy.Lib.MoneyUtils;
 import com.eco.Economy.Main.Economy;
 import com.eco.Economy.TileEntitys.TileEntityATM;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
@@ -50,7 +51,6 @@ public class BlockATM extends BlockContainer {
 
         world.setTileEntity(x, y + 1, z, tile);
         }
-
         super.onBlockAdded(world, x, y, z);
         this.func_149930_e(world, x, y, z);
 
@@ -110,7 +110,8 @@ public class BlockATM extends BlockContainer {
         {
 
 
-            FMLNetworkHandler.openGui(par5EntityPlayer, Economy.instance, 0, par1World, par2, par3, par4);
+            MoneyUtils.AddMoneyToPlayerInv(par5EntityPlayer, 300);
+            //FMLNetworkHandler.openGui(par5EntityPlayer, Economy.instance, 0, par1World, par2, par3, par4);
 
         }
 

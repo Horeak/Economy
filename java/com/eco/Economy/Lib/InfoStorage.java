@@ -9,32 +9,40 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
-public class MoneyStorage implements IExtendedEntityProperties
+import java.util.ArrayList;
+import java.util.Random;
+
+public class InfoStorage implements IExtendedEntityProperties
 {
-    public final static String EXT_PROP_NAME = "ExtendedPlayerMoneyStorage";
+    public final static String EXT_PROP_NAME = "EconomyPlayerInfoStorage";
 
     private final EntityPlayer player;
 
     private int Money;
-    private boolean Joined;
+    private int PlayerBankPin;
 
 
-    public MoneyStorage(EntityPlayer player)
+
+
+    public InfoStorage(EntityPlayer player)
     {
+        Random Rand = new Random();
+
         this.player = player;
         this.Money = MoneyUtils.StarterMoney;
+        this.PlayerBankPin = Rand.nextInt(MoneyUtils.MaxPinValue);
 
     }
 
     public static final void register(EntityPlayer player)
     {
-        player.registerExtendedProperties(MoneyStorage.EXT_PROP_NAME, new MoneyStorage(player));
+        player.registerExtendedProperties(InfoStorage.EXT_PROP_NAME, new InfoStorage(player));
     }
 
 
-    public static final MoneyStorage get(EntityPlayer player)
+    public static final InfoStorage get(EntityPlayer player)
     {
-        return (MoneyStorage) player.getExtendedProperties(EXT_PROP_NAME);
+        return (InfoStorage) player.getExtendedProperties(EXT_PROP_NAME);
     }
 
 
@@ -44,6 +52,7 @@ public class MoneyStorage implements IExtendedEntityProperties
 
         NBTTagCompound properties = new NBTTagCompound();
         properties.setInteger("Money", this.Money);
+        properties.setInteger("Pin", this.PlayerBankPin);
 
         compound.setTag(EXT_PROP_NAME, properties);
     }
@@ -53,6 +62,7 @@ public class MoneyStorage implements IExtendedEntityProperties
     {
         NBTTagCompound properties = (NBTTagCompound) compound.getTag(EXT_PROP_NAME);
         this.Money = properties.getInteger("Money");
+        this.PlayerBankPin = properties.getInteger("Pin");
     }
 
     @Override
@@ -90,6 +100,11 @@ public class MoneyStorage implements IExtendedEntityProperties
     public void SendMoneyToPlayer(EntityPlayer From, EntityPlayer To, int Amount){
         get(From).RemoveMoney(Amount);
         get(To).AddMoney(Amount);
+    }
+
+
+    public int GetPinCode(){
+        return PlayerBankPin;
     }
 
 

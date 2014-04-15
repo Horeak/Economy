@@ -13,6 +13,7 @@ public class MoneyUtils {
     public static int Multiplier = 1;
     public static int StarterMoney = 1000;
     public static int MaxMoneyTransfer = 100000;
+    public static int MaxPinValue = 9999;
 
     public static int TextArea = 1;
 
@@ -34,95 +35,426 @@ public class MoneyUtils {
             Amount = MaxMoneyTransfer;
 
 
-        for(int i = 0; i < (Amount + "").length(); i++){
 
-            String StringNumber = Integer.toString(Amount);
-            int CurrentNumber = Integer.valueOf(StringNumber.substring(i, i + 1));
+        int Current;
 
-            int UseNum = CurrentNumber * ((i + 1) * 10);
+       Current = GetMoneyAmount(Amount, 1000);
+        if(Current > 0){
+            AddItem(player, new ItemStack(GetMoneyStack(1000).getItem(), Current));
+            Amount -= (1000 * Current);
 
-            //System.out.println(GetMoneyStack(i * (10 * (i + 1))) + " : " + CurrentNumber + " : " + i);
+        }else{
 
+            Current = GetMoneyAmount(Amount, 500);
 
-            System.out.println(CurrentNumber + " : " + i);
+            if(Current > 0){
+                AddItem(player, new ItemStack(GetMoneyStack(500).getItem(), Current));
+                Amount -= (500 * Current);
 
+            }else{
 
-              if (UseNum > 20 && UseNum < 100){
-                int t = UseNum / 20;
-                int j = (UseNum - t) / 10;
-                  int k = UseNum - j;
+                Current = GetMoneyAmount(Amount, 200);
 
-
-
-                ItemStack stack_1 = new ItemStack(GetMoneyStack(20).getItem(), t);
-                ItemStack stack_2 = new ItemStack(GetMoneyStack(10).getItem(), j);
-                  ItemStack stack_3 = new ItemStack(GetMoneyStack(1).getItem(), k);
-
-                  AddItemToPlayerInv(player, stack_1);
-                  AddItemToPlayerInv(player, stack_2);
-                  AddItemToPlayerInv(player, stack_3);
-
-
-            }else if (UseNum > 9 && UseNum < 100){
-                int t = UseNum / 10;
-                int j = UseNum - t;
-
-
-
-                ItemStack stack_1 = new ItemStack(GetMoneyStack(10).getItem(), t);
-                ItemStack stack_2 = new ItemStack(GetMoneyStack(1).getItem(), j);
-
-                  AddItemToPlayerInv(player, stack_1);
-                  AddItemToPlayerInv(player, stack_2);
-
-
-              } else if(CurrentNumber > 5 && UseNum < 10){
-                      int t = CurrentNumber / 5;
-                      int j = CurrentNumber - t;
-
-                      ItemStack stack_1 = new ItemStack(GetMoneyStack(5).getItem(), t);
-                      ItemStack stack_2 = new ItemStack(GetMoneyStack(1).getItem(), j);
-
-                  AddItemToPlayerInv(player, stack_1);
-                  AddItemToPlayerInv(player, stack_2);
+                if(Current > 0){
+                    AddItem(player, new ItemStack(GetMoneyStack(200).getItem(), Current));
+                    Amount -= (200 * Current);
 
 
             }else{
 
+                Current = GetMoneyAmount(Amount, 100);
 
-                ItemStack stack_1 = new ItemStack(GetMoneyStack(1).getItem(), CurrentNumber);
+                if(Current > 0){
+                    AddItem(player, new ItemStack(GetMoneyStack(100).getItem(), Current));
+                    Amount -= (100 * Current);
 
-                  AddItemToPlayerInv(player, stack_1);
+                }else{
+
+                    Current = GetMoneyAmount(Amount, 50);
+
+                    if(Current > 0){
+                        AddItem(player, new ItemStack(GetMoneyStack(50).getItem(), Current));
+                        Amount -= (50 * Current);
+
+                    }else{
+
+                        Current = GetMoneyAmount(Amount, 20);
+
+                        if(Current > 0){
+                            AddItem(player, new ItemStack(GetMoneyStack(20).getItem(), Current));
+                            Amount -= (20 * Current);
+
+                        }else{
+
+                            Current = GetMoneyAmount(Amount, 10);
+
+                            if(Current > 0){
+                                AddItem(player, new ItemStack(GetMoneyStack(10).getItem(), Current));
+                                Amount -= (10 * Current);
+
+                            }else{
+
+                                Current = GetMoneyAmount(Amount, 5);
+
+                                if(Current > 0){
+                                    AddItem(player, new ItemStack(GetMoneyStack(5).getItem(), Current));
+                                    Amount -= (5 * Current);
+
+                                }else{
+
+                                    Current = GetMoneyAmount(Amount, 1);
+
+                                    if(Current > 0){
+                                        AddItem(player, new ItemStack(GetMoneyStack(1).getItem(), Current));
+                                         Amount -= Current;
+
+                                    }}}}}}}}}
+
+
+            Current = GetMoneyAmount(Amount, 500);
+
+            if(Current > 0){
+                AddItem(player, new ItemStack(GetMoneyStack(500).getItem(), Current));
+                Amount -= (500 * Current);
+
+            }else{
+
+                Current = GetMoneyAmount(Amount, 200);
+
+                if(Current > 0){
+                    AddItem(player, new ItemStack(GetMoneyStack(200).getItem(), Current));
+                    Amount -= (200 * Current);
+
+
+                }else{
+
+                    Current = GetMoneyAmount(Amount, 100);
+
+                    if(Current > 0){
+                        AddItem(player, new ItemStack(GetMoneyStack(100).getItem(), Current));
+                        Amount -= (100 * Current);
+
+                    }else{
+
+                        Current = GetMoneyAmount(Amount, 50);
+
+                        if(Current > 0){
+                            AddItem(player, new ItemStack(GetMoneyStack(50).getItem(), Current));
+                            Amount -= (50 * Current);
+
+                        }else{
+
+                            Current = GetMoneyAmount(Amount, 20);
+
+                            if(Current > 0){
+                                AddItem(player, new ItemStack(GetMoneyStack(20).getItem(), Current));
+                                Amount -= (20 * Current);
+
+                            }else{
+
+                                Current = GetMoneyAmount(Amount, 10);
+
+                                if(Current > 0){
+                                    AddItem(player, new ItemStack(GetMoneyStack(10).getItem(), Current));
+                                    Amount -= (10 * Current);
+
+                                }else{
+
+                                    Current = GetMoneyAmount(Amount, 5);
+
+                                    if(Current > 0){
+                                        AddItem(player, new ItemStack(GetMoneyStack(5).getItem(), Current));
+                                        Amount -= (5 * Current);
+
+                                    }else{
+
+                                        Current = GetMoneyAmount(Amount, 1);
+
+                                        if(Current > 0){
+                                            AddItem(player, new ItemStack(GetMoneyStack(1).getItem(), Current));
+                                             Amount -= Current;
+
+                                        }}}}}}}}
+
+
+
+                Current = GetMoneyAmount(Amount, 200);
+
+                if(Current > 0){
+                    AddItem(player, new ItemStack(GetMoneyStack(200).getItem(), Current));
+                    Amount -= (200 * Current);
+
+
+                }else{
+
+                    Current = GetMoneyAmount(Amount, 100);
+
+                    if(Current > 0){
+                        AddItem(player, new ItemStack(GetMoneyStack(100).getItem(), Current));
+                        Amount -= (100 * Current);
+
+                    }else{
+
+                        Current = GetMoneyAmount(Amount, 50);
+
+                        if(Current > 0){
+                            AddItem(player, new ItemStack(GetMoneyStack(50).getItem(), Current));
+                            Amount -= (50 * Current);
+
+                        }else{
+
+                            Current = GetMoneyAmount(Amount, 20);
+
+                            if(Current > 0){
+                                AddItem(player, new ItemStack(GetMoneyStack(20).getItem(), Current));
+                                Amount -= (20 * Current);
+
+                            }else{
+
+                                Current = GetMoneyAmount(Amount, 10);
+
+                                if(Current > 0){
+                                    AddItem(player, new ItemStack(GetMoneyStack(10).getItem(), Current));
+                                    Amount -= (10 * Current);
+
+                                }else{
+
+                                    Current = GetMoneyAmount(Amount, 5);
+
+                                    if(Current > 0){
+                                        AddItem(player, new ItemStack(GetMoneyStack(5).getItem(), Current));
+                                        Amount -= (5 * Current);
+
+                                    }else{
+
+                                        Current = GetMoneyAmount(Amount, 1);
+
+                                        if(Current > 0){
+                                            AddItem(player, new ItemStack(GetMoneyStack(1).getItem(), Current));
+                                             Amount -= Current;
+
+                                        }}}}}}}
+
+
+
+
+                    Current = GetMoneyAmount(Amount, 100);
+
+                    if(Current > 0){
+                        AddItem(player, new ItemStack(GetMoneyStack(100).getItem(), Current));
+                        Amount -= (100 * Current);
+
+                    }else{
+
+                        Current = GetMoneyAmount(Amount, 50);
+
+                        if(Current > 0){
+                            AddItem(player, new ItemStack(GetMoneyStack(50).getItem(), Current));
+                            Amount -= (50 * Current);
+
+                        }else{
+
+                            Current = GetMoneyAmount(Amount, 20);
+
+                            if(Current > 0){
+                                AddItem(player, new ItemStack(GetMoneyStack(20).getItem(), Current));
+                                Amount -= (20 * Current);
+
+                            }else{
+
+                                Current = GetMoneyAmount(Amount, 10);
+
+                                if(Current > 0){
+                                    AddItem(player, new ItemStack(GetMoneyStack(10).getItem(), Current));
+                                    Amount -= (10 * Current);
+
+                                }else{
+
+                                    Current = GetMoneyAmount(Amount, 5);
+
+                                    if(Current > 0){
+                                        AddItem(player, new ItemStack(GetMoneyStack(5).getItem(), Current));
+                                        Amount -= (5 * Current);
+
+                                    }else{
+
+                                        Current = GetMoneyAmount(Amount, 1);
+
+                                        if(Current > 0){
+                                            AddItem(player, new ItemStack(GetMoneyStack(1).getItem(), Current));
+                                             Amount -= Current;
+
+                                        }}}}}}
+
+
+                        Current = GetMoneyAmount(Amount, 50);
+
+                        if(Current > 0){
+                            AddItem(player, new ItemStack(GetMoneyStack(50).getItem(), Current));
+                            Amount -= (50 * Current);
+
+                        }else{
+
+                            Current = GetMoneyAmount(Amount, 20);
+
+                            if(Current > 0){
+                                AddItem(player, new ItemStack(GetMoneyStack(20).getItem(), Current));
+                                Amount -= (20 * Current);
+
+                            }else{
+
+                                Current = GetMoneyAmount(Amount, 10);
+
+                                if(Current > 0){
+                                    AddItem(player, new ItemStack(GetMoneyStack(10).getItem(), Current));
+                                    Amount -= (10 * Current);
+
+                                }else{
+
+                                    Current = GetMoneyAmount(Amount, 5);
+
+                                    if(Current > 0){
+                                        AddItem(player, new ItemStack(GetMoneyStack(5).getItem(), Current));
+                                        Amount -= (5 * Current);
+
+                                    }else{
+
+                                        Current = GetMoneyAmount(Amount, 1);
+
+                                        if(Current > 0){
+                                            AddItem(player, new ItemStack(GetMoneyStack(1).getItem(), Current));
+                                             Amount -= Current;
+
+                                        }}}}}
+
+
+
+                            Current = GetMoneyAmount(Amount, 20);
+
+                            if(Current > 0){
+                                AddItem(player, new ItemStack(GetMoneyStack(20).getItem(), Current));
+                                Amount -= (20 * Current);
+
+                            }else{
+
+                                Current = GetMoneyAmount(Amount, 10);
+
+                                if(Current > 0){
+                                    AddItem(player, new ItemStack(GetMoneyStack(10).getItem(), Current));
+                                    Amount -= (10 * Current);
+
+                                }else{
+
+                                    Current = GetMoneyAmount(Amount, 5);
+
+                                    if(Current > 0){
+                                        AddItem(player, new ItemStack(GetMoneyStack(5).getItem(), Current));
+                                        Amount -= (5 * Current);
+
+                                    }else{
+
+                                        Current = GetMoneyAmount(Amount, 1);
+
+                                        if(Current > 0){
+                                            AddItem(player, new ItemStack(GetMoneyStack(1).getItem(), Current));
+                                             Amount -= Current;
+
+                                        }}}}
+
+
+
+
+                                Current = GetMoneyAmount(Amount, 10);
+
+                                if(Current > 0){
+                                    AddItem(player, new ItemStack(GetMoneyStack(10).getItem(), Current));
+                                    Amount -= (10 * Current);
+
+                                }else{
+
+                                    Current = GetMoneyAmount(Amount, 5);
+
+                                    if(Current > 0){
+                                        AddItem(player, new ItemStack(GetMoneyStack(5).getItem(), Current));
+                                        Amount -= (5 * Current);
+
+                                    }else{
+
+                                        Current = GetMoneyAmount(Amount, 1);
+
+                                        if(Current > 0){
+                                            AddItem(player, new ItemStack(GetMoneyStack(1).getItem(), Current));
+                                             Amount -= Current;
+
+                                        }}}
+
+
+
+                                    Current = GetMoneyAmount(Amount, 5);
+
+                                    if(Current > 0){
+                                        AddItem(player, new ItemStack(GetMoneyStack(5).getItem(), Current));
+                                        Amount -= (5 * Current);
+
+                                    }else{
+
+                                        Current = GetMoneyAmount(Amount, 1);
+
+                                        if(Current > 0){
+                                            AddItem(player, new ItemStack(GetMoneyStack(1).getItem(), Current));
+                                             Amount -= Current;
+
+                                        }}
+
+
+
+
+                                    Current = GetMoneyAmount(Amount, 1);
+
+
+                                     if(Current > 0){
+                                         AddItem(player, new ItemStack(GetMoneyStack(1).getItem(), Current));
+                                         Amount -= Current;
+
+                                          }
+
+
+
+
+
+
+    }
+
+
+
+    private static void AddItem(EntityPlayer player, ItemStack Stack){
+
+        player.inventory.addItemStackToInventory(Stack);
+        player.inventory.inventoryChanged = true;
+        player.inventoryContainer.detectAndSendChanges();
+    }
+
+
+
+    private static int GetMoneyAmount(int amount, int CheckAmount){
+
+
+        if(amount >= CheckAmount){
+
+        int left = amount / CheckAmount;
+
+            if(left > 0){
+                return left;
             }
-
-
-
-
-
-
-           // ItemStack stack = new ItemStack(GetMoneyStack(i * (10 * (i))).getItem(), Integer.valueOf((Amount + "").substring(i, i + 1)));
-
-
-          //  player.inventory.addItemStackToInventory(stack);
-
-
-
 
 
         }
 
 
+        return 0;
     }
 
-
-    public static void AddItemToPlayerInv(EntityPlayer player, ItemStack Stack){
-
-        player.inventory.addItemStackToInventory(Stack);
-        player.inventory.inventoryChanged = true;
-    }
-
-
-    public static ItemStack GetMoneyStack(int Amount){
+    private static ItemStack GetMoneyStack(int Amount){
 
         if(Amount == 1)
             return new ItemStack(ModItemRegistry.Coin1);

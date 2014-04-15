@@ -60,7 +60,8 @@ public class TileEntitySafeRender extends TileEntitySpecialRenderer {
             boolean Top = te.getWorldObj().getBlock(te.xCoord, te.yCoord - 1, te.zCoord) == ModBlockRegistry.Safe;
 
             if(!Top)
-                this.model.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+                this.model.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tile);
+
 
 
 

@@ -1,6 +1,6 @@
 package com.eco.Economy.Gui;
 
-import com.eco.Economy.Lib.MoneyStorage;
+import com.eco.Economy.Lib.InfoStorage;
 import com.eco.Economy.Lib.MoneyUtils;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -47,7 +47,7 @@ public class MoneyOverlay extends GuiIngame {
 
         EntityClientPlayerMP player = this.mc.thePlayer;
 
-        MoneyStorage money = MoneyStorage.get(player);
+        InfoStorage money = InfoStorage.get(player);
 
         int Money;
 

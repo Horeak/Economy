@@ -86,6 +86,7 @@ public class Economy {
         MoneyUtils.Multiplier = config.get("Server Settings", "What should be the multiplier for money? (used for changing currency)", 1).getInt();
         MoneyUtils.StarterMoney = config.get("Server Settings", "What amount of money should new players start with?", 1000).getInt();
         MoneyUtils.MaxMoneyTransfer = config.get("Server Settings", "What should the max amount of money being transferred at once be?", 100000).getInt();
+        MoneyUtils.MaxPinValue = config.get("Server Settings", "The max value the pin can be?", 999).getInt();
 
 
 

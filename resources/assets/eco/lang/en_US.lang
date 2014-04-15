@@ -1,11 +1,16 @@
 itemGroup.tabEconomy=Economy
 
 tile.atm.name=ATM
-tile.safe.name=Safe
+tile.safe.name=Personal Safe
 
-gui.safe=Safe
-
-//TODO readd later
-gui.safe.Owner=Owner:
+gui.safe=Personal Safe
+gui.safe.amount=Amount: $amo$$monMark$
 
 message.safe.wrongOwner=This safe belongs to $Owner$!
+
+message.currency.worth=A $cur$ worth $amo$$monMark$
+message.currency.worthCustomCurrency=in $curName$
+message.currency.bill=bill
+message.currency.coin=coin
+
+item.creditcard.name=Credit Card

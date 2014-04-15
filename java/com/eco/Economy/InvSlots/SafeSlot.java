@@ -33,10 +33,10 @@ public class SafeSlot extends Slot {
     }
 
 
-    public boolean canTakeStack(EntityPlayer player)
-    {
+   // public boolean canTakeStack(EntityPlayer player)
+  //  {
 
-        return(tile.Placer != tile.EMPTY_GUI_STRING && player.getDisplayName().equalsIgnoreCase(tile.Placer));
+   //     return(tile.Placer != tile.EMPTY_GUI_STRING && player.getDisplayName().equalsIgnoreCase(tile.Placer));
 
-    }
+ //   }
 }

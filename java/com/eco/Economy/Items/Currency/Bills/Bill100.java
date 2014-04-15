@@ -11,7 +11,7 @@ public class Bill100 extends CurrencyItem {
     }
 
     @Override
-    public String CurrencyType() {
-        return "Bill";
+    public int CurrencyType() {
+        return 1;
     }
 }

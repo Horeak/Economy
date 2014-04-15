@@ -9,7 +9,7 @@ public class Coin1 extends CurrencyItem {
     }
 
     @Override
-    public String CurrencyType() {
-        return "Coin";
+    public int CurrencyType() {
+        return 0;
     }
 }

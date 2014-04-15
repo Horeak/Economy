@@ -1,7 +1,6 @@
 package com.eco.Economy.Tick;
 
-import com.eco.Economy.Lib.MoneyStorage;
-import com.eco.Economy.Lib.MoneyUtils;
+import com.eco.Economy.Lib.InfoStorage;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 
@@ -18,7 +17,7 @@ public class ServerTickHandler {
 
             if(event.player.isSneaking()){
 
-                MoneyStorage.get(event.player).SetMoney(1000);
+                InfoStorage.get(event.player).SetMoney(1000);
 
 
             }

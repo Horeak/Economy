@@ -58,7 +58,7 @@ public class SafeItemRender implements IItemRenderer
         }else
             GL11.glRotatef((2 * 90F), 0.0F, 1.0F, 0.0F);
 
-        model.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        model.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, null);
 
         GL11.glPopMatrix();
         GL11.glPopMatrix();

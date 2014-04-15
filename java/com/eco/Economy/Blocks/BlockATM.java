@@ -1,5 +1,6 @@
 package com.eco.Economy.Blocks;
 
+import com.eco.Economy.Lib.InfoStorage;
 import com.eco.Economy.Lib.ModInfo;
 import com.eco.Economy.Lib.MoneyUtils;
 import com.eco.Economy.Main.Economy;
@@ -110,7 +111,8 @@ public class BlockATM extends BlockContainer {
         {
 
 
-            MoneyUtils.AddMoneyToPlayerInv(par5EntityPlayer, 300);
+           // MoneyUtils.AddMoneyToPlayerInv(par5EntityPlayer, 17235);
+            System.out.println(InfoStorage.get(par5EntityPlayer).GetPinCode());
             //FMLNetworkHandler.openGui(par5EntityPlayer, Economy.instance, 0, par1World, par2, par3, par4);
 
         }

@@ -32,7 +32,7 @@ public class BlockSafe extends BlockContainer {
         this.setHardness(2);
     }
 
-    public static ResourceLocation ModelTexture = new ResourceLocation("textures/blocks/hardened_clay_stained_cyan.png");
+    public static ResourceLocation ModelTexture = new ResourceLocation(ModInfo.ModTextures, "textures/models/Safe.png");
 
     public boolean canPlaceBlockAt(World world, int x, int y, int z){
 
@@ -163,10 +163,11 @@ public class BlockSafe extends BlockContainer {
             if(par1World.getTileEntity(par2, par3, par4) instanceof TileEntitySafe){
                 TileEntitySafe tile = (TileEntitySafe) par1World.getTileEntity(par2, par3, par4);
 
-                if(tile.GetGuiOwner() == tile.EMPTY_GUI_STRING || par5EntityPlayer.getDisplayName().equalsIgnoreCase(tile.GetGuiOwner())){
+                if(tile.GetGuiOwner() == tile.EMPTY_GUI_STRING || par5EntityPlayer.getDisplayName().equalsIgnoreCase(tile.GetGuiOwner()) || par5EntityPlayer.capabilities.isCreativeMode){
 
 
 
+                   tile.setOpen();
             FMLNetworkHandler.openGui(par5EntityPlayer, Economy.instance, 0, par1World, par2, par3, par4);
                 }else{
 

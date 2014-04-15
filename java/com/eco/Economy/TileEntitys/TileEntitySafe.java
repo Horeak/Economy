@@ -18,6 +18,12 @@ public class TileEntitySafe extends TileEntity implements IInventory {
 
     public boolean top;
 
+    public boolean Open;
+
+    public float DoorRotate;
+
+    public int TotalAmountStored;
+
     public String Placer = NULL_STRING;
 
     public static String NULL_STRING ="ERROR";
@@ -28,6 +34,50 @@ public class TileEntitySafe extends TileEntity implements IInventory {
         return Placer;
         else
             return EMPTY_GUI_STRING;
+    }
+
+    public void setOpen(){
+        Open = true;
+
+        if(top){
+            if(worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) instanceof TileEntitySafe){
+                TileEntitySafe tile = (TileEntitySafe)worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
+
+                tile.Open = true;
+
+            }
+
+        }else{
+            if(worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) instanceof TileEntitySafe){
+                TileEntitySafe tile = (TileEntitySafe)worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+
+                tile.Open = true;
+
+            }
+
+        }
+    }
+
+    public void setClosed(){
+        Open = false;
+
+        if(top){
+            if(worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) instanceof TileEntitySafe){
+                TileEntitySafe tile = (TileEntitySafe)worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
+
+                tile.Open = false;
+
+            }
+
+        }else{
+            if(worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) instanceof TileEntitySafe){
+                TileEntitySafe tile = (TileEntitySafe)worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+
+                tile.Open = false;
+
+            }
+
+        }
     }
 
     public void SetOwner(String n, boolean First){
@@ -57,18 +107,11 @@ public class TileEntitySafe extends TileEntity implements IInventory {
             }
 
         Placer = n;
-            Economy.NETWORK_MANAGER.sendPacketToAllAround(new SyncSafeOwnerPacket(xCoord, yCoord, zCoord, n), worldObj.getWorldInfo().getVanillaDimension(), xCoord, yCoord, zCoord, 100);
-        }
-    }
-
-
-    public void updateEntity(){
-        if(!Placer.equalsIgnoreCase(NULL_STRING)){
-           // System.out.println(Placer + " : " + worldObj.isRemote);
-
 
         }
     }
+
+
 
 
     public TileEntitySafe(){
@@ -85,6 +128,7 @@ public class TileEntitySafe extends TileEntity implements IInventory {
         super.writeToNBT(nbt);
         nbt.setBoolean("IsTop", top);
         nbt.setString("Pl", Placer);
+        nbt.setInteger("Amount", TotalAmountStored);
 
 
         NBTTagList Items = new NBTTagList();
@@ -114,6 +158,7 @@ public class TileEntitySafe extends TileEntity implements IInventory {
         super.readFromNBT(nbt);
         top = nbt.getBoolean("IsTop");
         Placer = nbt.getString("Pl");
+        TotalAmountStored = nbt.getInteger("Amount");
 
 
 
@@ -133,6 +178,17 @@ public class TileEntitySafe extends TileEntity implements IInventory {
 
 
 
+    }
+
+
+
+
+    public int GetAmount(){
+        return TotalAmountStored;
+    }
+
+    public void SetAmount(int i){
+        TotalAmountStored = i;
     }
 
     @Override
@@ -186,14 +242,32 @@ public class TileEntitySafe extends TileEntity implements IInventory {
     }
 
 
+    public void UpdateAmount(){
+        TotalAmountStored = 0;
+
+        for(int i = 0; i < Items.length; i++){
+            if(Items[i] != null && Items[i].getItem() != null && Items[i].getItem() instanceof CurrencyItem){
+                CurrencyItem item = (CurrencyItem)Items[i].getItem();
+                TotalAmountStored += (item.Value() * Items[i].stackSize);
+
+            }
+        }
+    }
+
 
     public void InvChanged(){
+
+        UpdateAmount();
+
 
         if(top){
             if(worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) instanceof TileEntitySafe){
                 TileEntitySafe tile = (TileEntitySafe)worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
 
                 tile.Items = Items;
+
+                tile.UpdateAmount();
+
             }
         }else{
 
@@ -201,8 +275,14 @@ public class TileEntitySafe extends TileEntity implements IInventory {
                 TileEntitySafe tile = (TileEntitySafe)worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
 
                 tile.Items = Items;
+
+                tile.UpdateAmount();
+
             }
         }
+
+
+
 
 
 
@@ -232,10 +312,13 @@ public class TileEntitySafe extends TileEntity implements IInventory {
     @Override
     public void openInventory() {
 
+        setOpen();
+
     }
 
     @Override
     public void closeInventory() {
+        setClosed();
 
     }
 

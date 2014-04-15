@@ -1,6 +1,6 @@
 package com.eco.Economy.Event;
 
-import com.eco.Economy.Lib.MoneyStorage;
+import com.eco.Economy.Lib.InfoStorage;
 import com.eco.Economy.Main.Economy;
 import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
 import com.eco.Economy.Proxies.ServerProxy;
@@ -26,7 +26,7 @@ public void onLivingDeathEvent(LivingDeathEvent event)
                 if(event.entity.worldObj.difficultySetting == EnumDifficulty.HARD){
                     if(event.entity instanceof EntityPlayer){
                         EntityPlayer player = (EntityPlayer)event.entity;
-                        MoneyStorage.get(player).SetMoney(0);
+                        InfoStorage.get(player).SetMoney(0);
 
 
                     }
@@ -35,8 +35,8 @@ public void onLivingDeathEvent(LivingDeathEvent event)
                     if(event.entity instanceof EntityPlayer){
                         EntityPlayer player = (EntityPlayer)event.entity;
 
-                        if(MoneyStorage.get(player).GetMoney() > 0)
-                            MoneyStorage.get(player).SetMoney(MoneyStorage.get(player).GetMoney() - 500);
+                        if(InfoStorage.get(player).GetMoney() > 0)
+                            InfoStorage.get(player).SetMoney(InfoStorage.get(player).GetMoney() - 500);
 
                     }
 
@@ -46,8 +46,8 @@ public void onLivingDeathEvent(LivingDeathEvent event)
 
                     if(event.entity instanceof EntityPlayer){
                         EntityPlayer player = (EntityPlayer)event.entity;
-                        if(MoneyStorage.get(player).GetMoney() > 0)
-                            MoneyStorage.get(player).SetMoney(MoneyStorage.get(player).GetMoney() - 100);
+                        if(InfoStorage.get(player).GetMoney() > 0)
+                            InfoStorage.get(player).SetMoney(InfoStorage.get(player).GetMoney() - 100);
 
                     }
 
@@ -58,8 +58,8 @@ public void onLivingDeathEvent(LivingDeathEvent event)
                     if(event.entity.worldObj.difficultySetting == EnumDifficulty.PEACEFUL)
                         if(event.entity instanceof EntityPlayer){
                             EntityPlayer player = (EntityPlayer)event.entity;
-                            if(MoneyStorage.get(player).GetMoney() > 0)
-                                MoneyStorage.get(player).SetMoney(MoneyStorage.get(player).GetMoney() - 50);
+                            if(InfoStorage.get(player).GetMoney() > 0)
+                                InfoStorage.get(player).SetMoney(InfoStorage.get(player).GetMoney() - 50);
 
                         }
 
@@ -70,7 +70,7 @@ public void onLivingDeathEvent(LivingDeathEvent event)
 
 
         NBTTagCompound playerData = new NBTTagCompound();
-        ((MoneyStorage)(event.entity.getExtendedProperties(MoneyStorage.EXT_PROP_NAME))).saveNBTData(playerData);
+        ((InfoStorage)(event.entity.getExtendedProperties(InfoStorage.EXT_PROP_NAME))).saveNBTData(playerData);
         Economy.proxy.storeEntityData(((EntityPlayer) event.entity).getDisplayName(), playerData);
             ServerProxy.saveProxyData((EntityPlayer) event.entity);
         }
@@ -88,7 +88,7 @@ public void onEntityJoinWorld(EntityJoinWorldEvent event)
 
         NBTTagCompound playerData = Economy.proxy.getEntityData(((EntityPlayer) event.entity).getDisplayName());
         if (playerData != null) {
-        ((MoneyStorage)(event.entity.getExtendedProperties(MoneyStorage.EXT_PROP_NAME))).loadNBTData(playerData);
+        ((InfoStorage)(event.entity.getExtendedProperties(InfoStorage.EXT_PROP_NAME))).loadNBTData(playerData);
         }
             Economy.packetPipeline.sendTo(new SyncPlayerPropsPacket((EntityPlayer) event.entity), (EntityPlayerMP) event.entity);
         }

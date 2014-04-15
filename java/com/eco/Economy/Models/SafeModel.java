@@ -1,5 +1,6 @@
 package com.eco.Economy.Models;
 
+import com.eco.Economy.TileEntitys.TileEntitySafe;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -104,7 +105,10 @@ public class SafeModel extends ModelBase
         Door.addBox("HingeBottom", -1.5F, 8F, -0.8F, 2, 1, 1);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+
+    TileEntitySafe tile;
+
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,  TileEntitySafe tile)
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
@@ -119,6 +123,10 @@ public class SafeModel extends ModelBase
         side2.render(f5);
         Shelf.render(f5);
         Door.render(f5);
+
+
+        if(tile != null)
+            this.tile = tile;
     }
 
     private void setRotation(ModelRenderer model, float x, float y, float z)
@@ -131,6 +139,56 @@ public class SafeModel extends ModelBase
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
     {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+
+
+
+        if(tile != null){
+
+
+            if(tile.getWorldObj().getTileEntity(tile.xCoord, tile.yCoord + 1, tile.zCoord) instanceof TileEntitySafe){
+                TileEntitySafe tile_e = (TileEntitySafe)tile.getWorldObj().getTileEntity(tile.xCoord, tile.yCoord + 1, tile.zCoord);
+
+
+                Door.rotateAngleY = tile.DoorRotate;
+
+                if(tile.Open || tile_e.Open){
+
+
+
+                if(tile.DoorRotate > -2){
+                    tile.DoorRotate-= 0.01;
+                }
+
+
+                    if(tile_e.DoorRotate > -2){
+                        tile_e.DoorRotate-= 0.01;
+                    }
+
+
+
+                }else if (!tile.Open && !tile_e.Open){
+
+                if(tile.DoorRotate < 0)
+                    tile.DoorRotate += 0.01;
+
+
+
+                if(tile_e.DoorRotate < 0)
+                    tile_e.DoorRotate += 0.01;
+
+            }
+
+
+        }
+
+
+            Door.rotateAngleY = tile.DoorRotate;
+
+
+
+
     }
+
+}
 
 }

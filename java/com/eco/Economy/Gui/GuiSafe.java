@@ -1,6 +1,7 @@
 package com.eco.Economy.Gui;
 
 import com.eco.Economy.Container.SafeInvContainer;
+import com.eco.Economy.Lib.MoneyUtils;
 import com.eco.Economy.TileEntitys.TileEntitySafe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -15,6 +16,11 @@ public class GuiSafe extends GuiContainer {
     private static final ResourceLocation Texture = new ResourceLocation("textures/gui/container/generic_54.png");
 
 
+    public void onGuiClosed() {
+
+        tile.setClosed();
+
+    }
 
     TileEntitySafe tile;
 
@@ -24,6 +30,8 @@ public class GuiSafe extends GuiContainer {
             ySize = 222;
 
             this.tile = tile;
+
+            tile.setOpen();
         }
 
         @Override
@@ -48,11 +56,8 @@ public class GuiSafe extends GuiContainer {
             int y = (this.height - this.ySize) / 2;
 
 
-            //TODO Readd later
-           // fontRendererObj.drawString(StatCollector.translateToLocal("gui.safe.Owner") + tile.GetGuiOwner(), x + 40,  y + 4, 4210752);
 
-
-
+            fontRendererObj.drawString(StatCollector.translateToLocal("gui.safe.amount").replace("$amo$", tile.GetAmount() + "").replace("$monMark$", MoneyUtils.MoneyMark), x + 70, y + 128, 4210752);
 
         }
 

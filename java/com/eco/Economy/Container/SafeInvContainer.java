@@ -2,13 +2,12 @@ package com.eco.Economy.Container;
 
 import com.eco.Economy.InvSlots.SafeSlot;
 import com.eco.Economy.TileEntitys.TileEntitySafe;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 
@@ -16,11 +15,15 @@ public class SafeInvContainer extends Container {
 
     private TileEntitySafe tile;
 
-    int numRows = 3;
+    int numRows = 6;
+
+    int LastAmount;
+
 
     public SafeInvContainer(InventoryPlayer InvPlayer, TileEntitySafe tile)
     {
         this.tile = tile;
+
 
 
         for(int x = 0; x < 9; x++){
@@ -50,7 +53,12 @@ public class SafeInvContainer extends Container {
             }
         }
 
+
+        tile.setOpen();
+
     }
+
+
 
 
     @Override
@@ -96,12 +104,53 @@ public class SafeInvContainer extends Container {
     public void onContainerClosed(EntityPlayer par1EntityPlayer)
     {
         super.onContainerClosed(par1EntityPlayer);
-        this.tile.closeInventory();
+        tile.setClosed();
     }
 
     public IInventory getLowerChestInventory()
     {
         return this.tile;
+    }
+
+
+
+    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    {
+        super.addCraftingToCrafters(par1ICrafting);
+        par1ICrafting.sendProgressBarUpdate(this, 0, this.tile.GetAmount());
+
+    }
+
+    public void detectAndSendChanges()
+    {
+        super.detectAndSendChanges();
+
+        for (int i = 0; i < this.crafters.size(); ++i)
+        {
+            ICrafting icrafting = (ICrafting)this.crafters.get(i);
+
+            if (this.LastAmount != this.tile.GetAmount())
+            {
+                icrafting.sendProgressBarUpdate(this, 0, this.tile.GetAmount());
+            }
+
+
+        }
+
+        this.LastAmount = this.tile.GetAmount();
+
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void updateProgressBar(int par1, int par2)
+    {
+        if (par1 == 0)
+        {
+            this.tile.SetAmount(par2);
+        }
+
+
+
     }
 
 }

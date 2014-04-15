@@ -1,6 +1,6 @@
 package com.eco.Economy.Proxies;
 
-import com.eco.Economy.Lib.MoneyStorage;
+import com.eco.Economy.Lib.InfoStorage;
 import com.eco.Economy.Main.Economy;
 import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
 import com.eco.Economy.Tick.ClientTickHandler;
@@ -44,11 +44,11 @@ public class ServerProxy {
 
 
     private static final String getSaveKey(EntityPlayer player) {
-        return player.getCommandSenderName() + ":" + MoneyStorage.EXT_PROP_NAME;
+        return player.getCommandSenderName() + ":" + InfoStorage.EXT_PROP_NAME;
     }
 
     public static void saveProxyData(EntityPlayer player) {
-        MoneyStorage playerData = MoneyStorage.get(player);
+        InfoStorage playerData = InfoStorage.get(player);
         NBTTagCompound savedData = new NBTTagCompound();
 
         playerData.saveNBTData(savedData);
@@ -57,7 +57,7 @@ public class ServerProxy {
 
 
     public static final void loadProxyData(EntityPlayer player) {
-        MoneyStorage playerData = MoneyStorage.get(player);
+        InfoStorage playerData = InfoStorage.get(player);
         NBTTagCompound savedData = ServerProxy.getEntityData(getSaveKey(player));
         if (savedData != null) { playerData.loadNBTData(savedData); }
 

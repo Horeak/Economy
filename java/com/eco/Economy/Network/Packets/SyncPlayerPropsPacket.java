@@ -1,6 +1,6 @@
 package com.eco.Economy.Network.Packets;
 
-import com.eco.Economy.Lib.MoneyStorage;
+import com.eco.Economy.Lib.InfoStorage;
 import com.eco.Economy.Network.AbstractPacket;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
@@ -18,7 +18,7 @@ public class SyncPlayerPropsPacket extends AbstractPacket
 
     public SyncPlayerPropsPacket(EntityPlayer player) {
         data = new NBTTagCompound();
-        MoneyStorage.get(player).saveNBTData(data);
+        InfoStorage.get(player).saveNBTData(data);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class SyncPlayerPropsPacket extends AbstractPacket
 
     @Override
     public void handleClientSide(EntityPlayer player) {
-        MoneyStorage.get(player).loadNBTData(data);
+        InfoStorage.get(player).loadNBTData(data);
     }
 
     @Override

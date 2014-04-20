@@ -12,8 +12,10 @@ public class EntityConstructingEvent
     {
 
 
-        if (event.entity instanceof EntityPlayer && InfoStorage.get((EntityPlayer) event.entity) == null)
+        if (event.entity instanceof EntityPlayer && InfoStorage.get((EntityPlayer) event.entity) == null) {
             InfoStorage.register((EntityPlayer) event.entity);
+        }
+
 
         if (event.entity instanceof EntityPlayer && event.entity.getExtendedProperties(InfoStorage.EXT_PROP_NAME) == null)
             event.entity.registerExtendedProperties(InfoStorage.EXT_PROP_NAME, new InfoStorage((EntityPlayer) event.entity));

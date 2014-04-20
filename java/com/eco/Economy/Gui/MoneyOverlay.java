@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL11;
 
@@ -102,6 +103,7 @@ public class MoneyOverlay extends GuiIngame {
         }
 
 
+        this.drawCenteredString(this.mc.fontRenderer, StatCollector.translateToLocal("gui.overlay.pin") + " " + money.GetPinCode(), x, y - 10, 0xffffff);
 
 
 

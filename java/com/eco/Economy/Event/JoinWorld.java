@@ -1,7 +1,7 @@
 package com.eco.Economy.Event;
 
 import com.eco.Economy.Main.Economy;
-import com.eco.Economy.Network.Packets.*;
+import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

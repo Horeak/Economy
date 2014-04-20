@@ -13,7 +13,9 @@ public class MoneyUtils {
     public static int Multiplier = 1;
     public static int StarterMoney = 1000;
     public static int MaxMoneyTransfer = 100000;
-    public static int MaxPinValue = 9999;
+    public static int MaxPinLength = 4;
+
+    public static int EmptyPin = -9999;
 
     public static int TextArea = 1;
 

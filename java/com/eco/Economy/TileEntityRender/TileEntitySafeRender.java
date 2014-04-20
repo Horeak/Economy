@@ -2,15 +2,11 @@ package com.eco.Economy.TileEntityRender;
 
 import com.eco.Economy.Blocks.BlockSafe;
 import com.eco.Economy.Blocks.ModBlockRegistry;
-import com.eco.Economy.Lib.ModInfo;
-import com.eco.Economy.Models.ATMmodel;
 import com.eco.Economy.Models.SafeModel;
-import com.eco.Economy.TileEntitys.TileEntityATM;
 import com.eco.Economy.TileEntitys.TileEntitySafe;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
@@ -60,7 +56,7 @@ public class TileEntitySafeRender extends TileEntitySpecialRenderer {
             boolean Top = te.getWorldObj().getBlock(te.xCoord, te.yCoord - 1, te.zCoord) == ModBlockRegistry.Safe;
 
             if(!Top)
-                this.model.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tile);
+                this.model.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tile.DoorRotate);
 
 
 

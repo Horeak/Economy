@@ -2,8 +2,6 @@ package com.eco.Economy.InvSlots;
 
 import com.eco.Economy.Items.Currency.CurrencyItem;
 import com.eco.Economy.TileEntitys.TileEntitySafe;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 

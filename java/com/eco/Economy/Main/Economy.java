@@ -24,7 +24,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -86,7 +85,7 @@ public class Economy {
         MoneyUtils.Multiplier = config.get("Server Settings", "What should be the multiplier for money? (used for changing currency)", 1).getInt();
         MoneyUtils.StarterMoney = config.get("Server Settings", "What amount of money should new players start with?", 1000).getInt();
         MoneyUtils.MaxMoneyTransfer = config.get("Server Settings", "What should the max amount of money being transferred at once be?", 100000).getInt();
-        MoneyUtils.MaxPinValue = config.get("Server Settings", "The max value the pin can be?", 999).getInt();
+        MoneyUtils.MaxPinLength = config.get("Server Settings", "What should the max length of the ban pin code be?", 4).getInt();
 
 
 
@@ -171,5 +170,8 @@ public class Economy {
         FMLCommonHandler.instance().bus().register(proxy.tickHandlerClient);
 
     }
+
+
+
 
     }

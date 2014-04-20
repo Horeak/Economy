@@ -2,8 +2,6 @@ package com.eco.Economy.TileEntitys;
 
 
 import com.eco.Economy.Items.Currency.CurrencyItem;
-import com.eco.Economy.Main.Economy;
-import com.eco.Economy.Network.Simple.Packets.SyncSafeOwnerPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -28,6 +26,40 @@ public class TileEntitySafe extends TileEntity implements IInventory {
 
     public static String NULL_STRING ="ERROR";
     public static String EMPTY_GUI_STRING = "ERROR_EMPTY_OWNER";
+
+   public void updateEntity(){
+
+
+      TileEntitySafe tile = null;
+
+       if(top){
+           if(worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) instanceof TileEntitySafe){
+               tile = (TileEntitySafe)worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
+           }
+       }else{
+           if(worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) instanceof TileEntitySafe){
+               tile = (TileEntitySafe)worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+           }
+       }
+
+       if(tile != null) {
+
+           if (Open || tile.Open) {
+
+               if (DoorRotate > -2) {
+                   DoorRotate -= 0.01;
+               }
+
+           } else if (!Open && !tile.Open) {
+
+               if (DoorRotate < 0)
+                   DoorRotate += 0.01;
+           }
+
+       }
+
+
+   }
 
     public String GetGuiOwner(){
         if(!Placer.equalsIgnoreCase(NULL_STRING))

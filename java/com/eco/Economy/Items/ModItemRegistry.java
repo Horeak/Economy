@@ -1,9 +1,12 @@
 package com.eco.Economy.Items;
 
+import com.eco.Economy.Items.Currency.Bills.*;
+import com.eco.Economy.Items.Currency.Coins.Coin1;
+import com.eco.Economy.Items.Currency.Coins.Coin10;
+import com.eco.Economy.Items.Currency.Coins.Coin20;
+import com.eco.Economy.Items.Currency.Coins.Coin5;
 import com.eco.Economy.Lib.ModInfo;
 import com.eco.Economy.Main.Economy;
-import com.eco.Economy.Items.Currency.Bills.*;
-import com.eco.Economy.Items.Currency.Coins.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.util.StatCollector;

@@ -9,7 +9,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class InfoStorage implements IExtendedEntityProperties
@@ -26,12 +25,27 @@ public class InfoStorage implements IExtendedEntityProperties
 
     public InfoStorage(EntityPlayer player)
     {
-        Random Rand = new Random();
 
         this.player = player;
         this.Money = MoneyUtils.StarterMoney;
-        this.PlayerBankPin = Rand.nextInt(MoneyUtils.MaxPinValue);
+        this.PlayerBankPin = MoneyUtils.EmptyPin;
 
+
+    }
+
+
+    public void SetRandomPin(){
+
+        Random Rand = new Random();
+        int x = 0;
+
+        for(int i = 0; i < (MoneyUtils.MaxPinLength); i++){
+            x += + Rand.nextInt(9);
+            if(i < MoneyUtils.MaxPinLength)
+                x = x* 10;
+        }
+
+        SetPin(x);
     }
 
     public static final void register(EntityPlayer player)
@@ -70,6 +84,12 @@ public class InfoStorage implements IExtendedEntityProperties
     {
     }
 
+
+
+    public void SetPin(int Code){
+        PlayerBankPin = Code;
+    }
+
     public void SetMoney(int Amount){
         Money = Amount;
 
@@ -97,8 +117,8 @@ public class InfoStorage implements IExtendedEntityProperties
         return Money;
     }
 
-    public void SendMoneyToPlayer(EntityPlayer From, EntityPlayer To, int Amount){
-        get(From).RemoveMoney(Amount);
+    public void SendMoneyToPlayer(EntityPlayer To, int Amount){
+        RemoveMoney(Amount);
         get(To).AddMoney(Amount);
     }
 

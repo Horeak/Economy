@@ -224,8 +224,6 @@ public class BlockSafe extends BlockContainer {
 
         if(par5EntityLivingBase instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer)par5EntityLivingBase;
-            //TODO FIX!
-            //Economy.packetPipeline.sendToDimension(new SyncSafeOwnerPakcet(par2, par3, par4, player.getDisplayName()), par1World.getWorldInfo().getVanillaDimension());
 
             if(par1World.getTileEntity(par2, par3, par4) instanceof TileEntitySafe){
                 TileEntitySafe tile = (TileEntitySafe)par1World.getTileEntity(par2, par3, par4);

@@ -67,6 +67,7 @@ public class Economy {
     public void preInit(FMLPreInitializationEvent event)
     {
 
+
         config = new Configuration(new File(event.getModConfigurationDirectory() + "/tm1990's mods/Economy.cfg"));
 
 

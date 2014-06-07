@@ -2,6 +2,7 @@ package com.eco.Economy.Proxies;
 
 import com.eco.Economy.Lib.InfoStorage;
 import com.eco.Economy.Main.Economy;
+import com.eco.Economy.Network.PacketHandler;
 import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
 import com.eco.Economy.Tick.ClientTickHandler;
 import com.eco.Economy.Tick.ServerTickHandler;
@@ -61,7 +62,7 @@ public class ServerProxy {
         NBTTagCompound savedData = ServerProxy.getEntityData(getSaveKey(player));
         if (savedData != null) { playerData.loadNBTData(savedData); }
 
-        Economy.packetPipeline.sendTo(new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
+        PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
     }
 
 

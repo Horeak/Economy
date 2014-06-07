@@ -11,8 +11,8 @@ import com.eco.Economy.Gui.MoneyOverlay;
 import com.eco.Economy.Items.ModItemRegistry;
 import com.eco.Economy.Lib.ModInfo;
 import com.eco.Economy.Lib.MoneyUtils;
-import com.eco.Economy.Network.PacketPipeline;
-import com.eco.Economy.Network.Simple.NetworkManager;
+import com.eco.Economy.Network.ChannelHandler;
+import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
 import com.eco.Economy.Proxies.ServerProxy;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -21,6 +21,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,6 +31,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
+import java.util.EnumMap;
 
 
 @Mod(modid = ModInfo.ModId, name = ModInfo.ModName, version = ModInfo.ModVersion)
@@ -43,9 +45,6 @@ public class Economy {
     public static ServerProxy proxy;
 
 
-
-
-    public static NetworkManager NETWORK_MANAGER;
 
     public static net.minecraft.creativetab.CreativeTabs ModTab = new net.minecraft.creativetab.CreativeTabs("tabEconomy")
     {
@@ -61,7 +60,7 @@ public class Economy {
 
     public static Configuration config;
 
-    public static final PacketPipeline packetPipeline = new PacketPipeline();
+    public static EnumMap<Side, FMLEmbeddedChannel> channels;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -76,6 +75,8 @@ public class Economy {
         MoneyUtils.TextArea = config.get("Client Settings", "Where on the screen should the money be showed?  top_right = 1  top_left = 2  bottom_right = 3  bottom_left = 4  Mode", 1).getInt();
         MoneyUtils.CurrencyName = config.get("Client Settings", "What should the currency be called? (null for nothing)(default=null)", "null").getString();
 
+
+            channels = ChannelHandler.getChannelHandlers("EconomyNetwork", SyncPlayerPropsPacket.class);
 
 
         }
@@ -129,11 +130,6 @@ public class Economy {
     @EventHandler
     public void Init(FMLInitializationEvent event){
 
-        packetPipeline.initialise();
-
-
-        NETWORK_MANAGER = new NetworkManager();
-
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
 
@@ -142,10 +138,8 @@ public class Economy {
 
 
     @EventHandler
-    public void PostInit(FMLPostInitializationEvent event)
-    {
+    public void PostInit(FMLPostInitializationEvent event){
 
-        packetPipeline.postInitialise();
 
 
     }

@@ -1,7 +1,10 @@
-package com.eco.Economy.Network.Simple.Packets;
+package com.eco.Economy.Network.Packets;
 
-import com.eco.Economy.Network.Simple.IPacket;
+import com.eco.Economy.Network.AbstractPacket;
 import com.eco.Economy.TileEntitys.TileEntitySafe;
+import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.relauncher.Side;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -9,7 +12,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class SyncSafeOwnerPacket extends IPacket {
+public class SyncSafeOwnerPacket extends AbstractPacket {
 
 
 
@@ -28,31 +31,32 @@ public class SyncSafeOwnerPacket extends IPacket {
 
     }
 
-    @Override
-    public void read(DataInputStream data) throws IOException {
 
+
+
+
+    @Override
+    public void writeTo(ByteBuf data, Side side) {
+        data.writeInt(x);
+        data.writeInt(y);
+        data.writeInt(z);
+
+        ByteBufUtils.writeUTF8String(data, Owner);
+    }
+
+    @Override
+    public void readFrom(ByteBuf data, Side side) {
         x = data.readInt();
         y = data.readInt();
         z = data.readInt();
 
         if(Owner != null && Owner != "")
-        Owner = data.readUTF();
+            Owner = ByteBufUtils.readUTF8String(data);
 
     }
 
     @Override
-    public void write(DataOutputStream data) throws IOException {
-
-        data.writeInt(x);
-        data.writeInt(y);
-        data.writeInt(z);
-
-        data.writeUTF(Owner);
-
-    }
-
-    @Override
-    public void execute(EntityPlayer player) {
+    public void execute(Side side, EntityPlayer player) {
 
         World world = player.getEntityWorld();
 
@@ -61,13 +65,12 @@ public class SyncSafeOwnerPacket extends IPacket {
             TileEntitySafe tile = (TileEntitySafe)world.getTileEntity(x,y,z);
 
             if(Owner != "" && Owner != null && Owner != "ERROR")
-            tile.Placer = Owner;
+                tile.Placer = Owner;
 
 
 
 
 
         }
-
     }
 }

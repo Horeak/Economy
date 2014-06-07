@@ -1,6 +1,7 @@
 package com.eco.Economy.Event;
 
 import com.eco.Economy.Main.Economy;
+import com.eco.Economy.Network.PacketHandler;
 import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,6 @@ public class JoinWorld {
     {
 
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer)
-            Economy.packetPipeline.sendTo(new SyncPlayerPropsPacket(((EntityPlayer)event.entity)), (EntityPlayerMP) event.entity);
+            PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket(((EntityPlayer) event.entity)), (EntityPlayerMP) event.entity);
     }
 }

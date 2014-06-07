@@ -1,6 +1,8 @@
 package com.eco.Economy.Lib;
 
 import com.eco.Economy.Main.Economy;
+import com.eco.Economy.Network.ChannelHandler;
+import com.eco.Economy.Network.PacketHandler;
 import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -93,14 +95,14 @@ public class InfoStorage implements IExtendedEntityProperties
     public void SetMoney(int Amount){
         Money = Amount;
 
-        Economy.packetPipeline.sendTo(new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
+        PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
     }
 
     public void AddMoney(int Amount)
     {
         Money += (Amount * (MoneyUtils.Multiplier));
 
-        Economy.packetPipeline.sendTo(new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
+        PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
     }
 
     public void RemoveMoney(int Amount){
@@ -109,7 +111,7 @@ public class InfoStorage implements IExtendedEntityProperties
         if(Money < 0)
             Money = 0;
 
-        Economy.packetPipeline.sendTo(new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
+        PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
 
     }
 

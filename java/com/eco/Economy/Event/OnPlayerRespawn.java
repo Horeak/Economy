@@ -2,6 +2,7 @@ package com.eco.Economy.Event;
 
 import com.eco.Economy.Lib.InfoStorage;
 import com.eco.Economy.Main.Economy;
+import com.eco.Economy.Network.PacketHandler;
 import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
 import com.eco.Economy.Proxies.ServerProxy;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -90,7 +91,7 @@ public void onEntityJoinWorld(EntityJoinWorldEvent event)
         if (playerData != null) {
         ((InfoStorage)(event.entity.getExtendedProperties(InfoStorage.EXT_PROP_NAME))).loadNBTData(playerData);
         }
-            Economy.packetPipeline.sendTo(new SyncPlayerPropsPacket((EntityPlayer) event.entity), (EntityPlayerMP) event.entity);
+            PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket((EntityPlayer) event.entity), (EntityPlayerMP) event.entity);
         }
 
 

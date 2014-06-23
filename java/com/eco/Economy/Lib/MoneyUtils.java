@@ -1,9 +1,11 @@
 package com.eco.Economy.Lib;
 
 
-import com.eco.Economy.Items.ModItemRegistry;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import com.eco.Economy.Items.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.item.*;
+
+import java.util.*;
 
 public class MoneyUtils {
 
@@ -15,12 +17,40 @@ public class MoneyUtils {
     public static int MaxMoneyTransfer = 100000;
     public static int MaxPinLength = 4;
 
-    public static int EmptyPin = -9999;
-
     public static int TextArea = 1;
 
 
 
+    public static String GetCreditCardOwner(ItemStack stack){
+
+        if(stack.getTagCompound() != null){
+            if(stack.getTagCompound().getString("CardOwner") != null && !stack.getTagCompound().getString("CardOwner").equalsIgnoreCase(""))
+            return stack.getTagCompound().getString("CardOwner");
+        }
+
+        return "";
+    }
+
+    public static String GetCreditCardPin(ItemStack stack){
+
+        if(stack.getTagCompound() != null){
+            if(stack.getTagCompound().getString("PinCode") != null && !stack.getTagCompound().getString("PinCode").equalsIgnoreCase(""))
+                return stack.getTagCompound().getString("PinCode");
+        }
+
+        return "";
+    }
+
+
+    public static int GenerateRandomPin(){
+        int t = 0;
+        Random random = new Random();
+        for(int i = 0; i < MaxPinLength-1; i++){
+            t += random.nextInt(9);
+            t *= 10;
+        }
+            return t;
+    }
 
 
     /**

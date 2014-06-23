@@ -1,70 +1,48 @@
 package com.eco.Economy.Network;
 
-import com.miscitems.MiscItemsAndBlocks.Main.Main;
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
-import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.crash.CrashReport;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.util.ReportedException;
-import org.apache.logging.log4j.Level;
-
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Map;
+import com.miscitems.MiscItemsAndBlocks.Utils.Handlers.*;
+import cpw.mods.fml.common.network.*;
+import cpw.mods.fml.relauncher.*;
+import io.netty.buffer.*;
+import io.netty.channel.*;
+import net.minecraft.client.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.network.*;
 
 public class ChannelHandler extends FMLIndexedMessageToMessageCodec<AbstractPacket>
 {
     public final String channel;
 
-    private ChannelHandler(String s, Class<? extends AbstractPacket>...packetTypes)
+    public ChannelHandler(String s)
     {
         channel = s;
-        ArrayList<Class<? extends AbstractPacket>> list = new ArrayList<Class<? extends AbstractPacket>>();
-        for(int i = 0; i < packetTypes.length; i++)
-        {
-            if(!list.contains(packetTypes[i]))
-            {
-                list.add(packetTypes[i]);
-            }
-            else
-            {
-                Main.logger.log(Level.ERROR, "Channel " + channel + " is reregistering packet types!", true);
-            }
-            addDiscriminator(i, packetTypes[i]);
-        }
+
     }
 
-    public static EnumMap<Side, FMLEmbeddedChannel> getChannelHandlers(String modId, Class<? extends AbstractPacket>...packetTypes)
+
+    public void RegisterPacket(int Number, Class<? extends AbstractPacket> c){
+        addDiscriminator(Number, c);
+    }
+
+
+    @Override
+    public void encodeInto(ChannelHandlerContext ctx, AbstractPacket msg, ByteBuf target) throws Exception
     {
-        if(packetTypes.length == 0)
-        {
-            throw new ReportedException(new CrashReport("Mod " + modId + " is not registering any packets with its channel handlers.", new Throwable()));
-        }
-        EnumMap<Side, FMLEmbeddedChannel> handlers = NetworkRegistry.INSTANCE.newChannel(modId, new ChannelHandler(modId, packetTypes));
-
-        PacketExecuter executer = new PacketExecuter();
-
-        for(Map.Entry<Side, FMLEmbeddedChannel> e : handlers.entrySet())
-        {
-            FMLEmbeddedChannel channel = e.getValue();
-            String codec = channel.findChannelHandlerNameForType(ChannelHandler.class);
-            channel.pipeline().addAfter(codec, "PacketExecuter", executer);
-        }
-
-        return handlers;
+        LogHandler.Debug("Writing packet!!!", 2);
+                 msg.toBytes(target, ctx.channel().attr(NetworkRegistry.CHANNEL_SOURCE).get());
     }
+
+    @Override
+    public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, AbstractPacket msg)
+    {
+
+        LogHandler.Debug("Reading packet!!!", 2);
+                msg.fromBytes(source, ctx.channel().attr(NetworkRegistry.CHANNEL_SOURCE).get());
+    }
+
 
     @Sharable
-    private static class PacketExecuter extends SimpleChannelInboundHandler<AbstractPacket>
+    public static class PacketExecuter extends SimpleChannelInboundHandler<AbstractPacket>
     {
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, AbstractPacket msg) throws Exception
@@ -81,7 +59,7 @@ public class ChannelHandler extends FMLIndexedMessageToMessageCodec<AbstractPack
                 player = this.getClientPlayer();
             }
 
-            msg.execute(side, player);
+            msg.onMessage(side, player);
         }
 
         @SideOnly(Side.CLIENT)
@@ -89,34 +67,6 @@ public class ChannelHandler extends FMLIndexedMessageToMessageCodec<AbstractPack
         {
             return Minecraft.getMinecraft().thePlayer;
         }
-    }
-
-    @Override
-    public void encodeInto(ChannelHandlerContext ctx, AbstractPacket msg, ByteBuf target) throws Exception
-    {
-        try
-        {
-            msg.writeTo(target, ctx.channel().attr(NetworkRegistry.CHANNEL_SOURCE).get());
         }
-        catch(Exception e)
-        {
-            Main.logger.log(Level.ERROR, "Error writing to packet for channel: " + channel, true);
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, AbstractPacket msg)
-    {
-        try
-        {
-            msg.readFrom(source, ctx.channel().attr(NetworkRegistry.CHANNEL_SOURCE).get());
-        }
-        catch(Exception e)
-        {
-            Main.logger.log(Level.ERROR, "Error reading from packet for channel: " + channel, true);
-            e.printStackTrace();
-        }
-    }
 
 }

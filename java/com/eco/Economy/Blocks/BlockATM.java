@@ -1,20 +1,20 @@
 package com.eco.Economy.Blocks;
 
-import com.eco.Economy.Lib.InfoStorage;
-import com.eco.Economy.Lib.ModInfo;
-import com.eco.Economy.TileEntitys.TileEntityATM;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import com.eco.Economy.Items.*;
+import com.eco.Economy.Lib.*;
+import com.eco.Economy.Main.*;
+import com.eco.Economy.TileEntitys.*;
+import cpw.mods.fml.common.network.internal.*;
+import net.minecraft.block.*;
+import net.minecraft.block.material.*;
+import net.minecraft.client.renderer.texture.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.init.*;
+import net.minecraft.item.*;
+import net.minecraft.tileentity.*;
+import net.minecraft.util.*;
+import net.minecraft.world.*;
 
 public class BlockATM extends BlockContainer {
 
@@ -98,21 +98,21 @@ public class BlockATM extends BlockContainer {
     }
 
 
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
     {
-        if (par1World.isRemote)
-        {
-            return true;
+
+
+
+        if(!world.isRemote)
+            if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof CreditCard) {
+                System.out.println(MoneyUtils.GetCreditCardOwner(player.inventory.getCurrentItem()));
+                System.out.println(MoneyUtils.GetCreditCardPin(player.inventory.getCurrentItem()));
+            }
+
+        if(!world.isRemote){
+            FMLNetworkHandler.openGui(player, Economy.instance, 0, world, x, y, z);
         }
-        else
-        {
 
-
-           // MoneyUtils.AddMoneyToPlayerInv(par5EntityPlayer, 17235);
-            System.out.println(InfoStorage.get(par5EntityPlayer).GetPinCode());
-            //FMLNetworkHandler.openGui(par5EntityPlayer, Economy.instance, 0, par1World, par2, par3, par4);
-
-        }
 
     return  true;
     }

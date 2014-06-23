@@ -1,17 +1,15 @@
 package com.eco.Economy.Proxies;
 
-import com.eco.Economy.Lib.InfoStorage;
-import com.eco.Economy.Main.Economy;
-import com.eco.Economy.Network.PacketHandler;
-import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
-import com.eco.Economy.Tick.ClientTickHandler;
-import com.eco.Economy.Tick.ServerTickHandler;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
+import com.eco.Economy.Lib.*;
+import com.eco.Economy.Network.*;
+import com.eco.Economy.Network.Packets.*;
+import com.eco.Economy.Tick.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.item.*;
+import net.minecraft.nbt.*;
+import net.minecraftforge.common.util.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ServerProxy {
 
@@ -24,6 +22,14 @@ public class ServerProxy {
 
 
     public void RegisterClientTick(){
+
+    }
+
+    public void handleTileEntityPacket(int x, int y, int z, ForgeDirection orientation, byte state, String customName) {
+
+    }
+
+    public void handleTileWithItemPacket(int x, int y, int z, ForgeDirection orientation, byte state, String customName, Item itemID, int metaData, int stackSize, int color) {
 
     }
 
@@ -62,7 +68,7 @@ public class ServerProxy {
         NBTTagCompound savedData = ServerProxy.getEntityData(getSaveKey(player));
         if (savedData != null) { playerData.loadNBTData(savedData); }
 
-        PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
+        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
     }
 
 

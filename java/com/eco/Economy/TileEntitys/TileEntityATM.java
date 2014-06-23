@@ -1,9 +1,8 @@
 package com.eco.Economy.TileEntitys;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.nbt.*;
 
-public class TileEntityATM extends TileEntity {
+public class TileEntityATM extends TileEntityInvBase {
 
 
 
@@ -11,12 +10,18 @@ public class TileEntityATM extends TileEntity {
 
 
 
+    public TileEntityATM() {
+        super(1, "Atm", 64);
+    }
 
 
     public void writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
         nbt.setBoolean("IsTop", top);
+
+
+
 
     }
 
@@ -26,5 +31,12 @@ public class TileEntityATM extends TileEntity {
         super.readFromNBT(nbt);
         top = nbt.getBoolean("IsTop");
 
+
+
     }
+
+
+
+
+
 }

@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 public class BlockSafe extends BlockContainer {
 
 
-    protected BlockSafe() {
+    public BlockSafe() {
         super(Material.iron);
         this.setHardness(2);
     }

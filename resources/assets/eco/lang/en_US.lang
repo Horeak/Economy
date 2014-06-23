@@ -2,12 +2,26 @@ itemGroup.tabEconomy=Economy
 
 tile.atm.name=ATM
 tile.safe.name=Personal Safe
+tile.bankinserter.name=Bank Account Inserter
+tile.playershop.name=Player Shop
+tile.playershopglass.name=Player Shop Viewing Glass
 
 gui.safe=Personal Safe
 gui.safe.amount=Amount: $amo$$monMark$
-gui.overlay.pin=Pin:
+
+gui.atm.buttonCancel=Cancel
+gui.atm.buttonClear=Clear
+gui.atm.buttonEnter=Enter
+gui.atm.text.enterPin=Please enter pin:
+gui.atm.text.money=Enter the amount:
+gui.atm.text.currentAmount=Money available:
+gui.playerShop.text.in=In
+gui.playerShop.text.out=Out
+gui.playershop.text.payment=Payment
+gui.playershop.text.offer=Offer
 
 message.safe.wrongOwner=This safe belongs to $Owner$!
+message.atm.moneySent=The money has been sent from your account.
 
 message.currency.worth=A $cur$ worth $amo$$monMark$
 message.currency.worthCustomCurrency=in $curName$
@@ -20,3 +34,5 @@ item.creditcard.name=Credit Card
 
 itemDesc.creditcard.owner=Credit card owner: $owner$
 itemDesc.creditcard.ownerNone=Invalid or no credit card owner
+itemDesc.creditcard.pin=Pin code: $code$
+itemDesc.creditcard.pinInvalid=Invalid credit card user

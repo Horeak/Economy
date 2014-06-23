@@ -1,17 +1,14 @@
 package com.eco.Economy.Lib;
 
-import com.eco.Economy.Main.Economy;
-import com.eco.Economy.Network.ChannelHandler;
-import com.eco.Economy.Network.PacketHandler;
-import com.eco.Economy.Network.Packets.SyncPlayerPropsPacket;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import net.minecraftforge.common.IExtendedEntityProperties;
+import com.eco.Economy.Network.*;
+import com.eco.Economy.Network.Packets.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.nbt.*;
+import net.minecraft.world.*;
+import net.minecraftforge.common.*;
 
-import java.util.Random;
+import java.util.*;
 
 public class InfoStorage implements IExtendedEntityProperties
 {
@@ -19,18 +16,14 @@ public class InfoStorage implements IExtendedEntityProperties
 
     private final EntityPlayer player;
 
-    private int Money;
-    private int PlayerBankPin;
+    private int Money = MoneyUtils.StarterMoney;
 
 
 
 
     public InfoStorage(EntityPlayer player)
     {
-
         this.player = player;
-        this.Money = MoneyUtils.StarterMoney;
-        this.PlayerBankPin = MoneyUtils.EmptyPin;
 
 
     }
@@ -41,13 +34,6 @@ public class InfoStorage implements IExtendedEntityProperties
         Random Rand = new Random();
         int x = 0;
 
-        for(int i = 0; i < (MoneyUtils.MaxPinLength); i++){
-            x += + Rand.nextInt(9);
-            if(i < MoneyUtils.MaxPinLength)
-                x = x* 10;
-        }
-
-        SetPin(x);
     }
 
     public static final void register(EntityPlayer player)
@@ -68,7 +54,6 @@ public class InfoStorage implements IExtendedEntityProperties
 
         NBTTagCompound properties = new NBTTagCompound();
         properties.setInteger("Money", this.Money);
-        properties.setInteger("Pin", this.PlayerBankPin);
 
         compound.setTag(EXT_PROP_NAME, properties);
     }
@@ -78,7 +63,6 @@ public class InfoStorage implements IExtendedEntityProperties
     {
         NBTTagCompound properties = (NBTTagCompound) compound.getTag(EXT_PROP_NAME);
         this.Money = properties.getInteger("Money");
-        this.PlayerBankPin = properties.getInteger("Pin");
     }
 
     @Override
@@ -88,21 +72,18 @@ public class InfoStorage implements IExtendedEntityProperties
 
 
 
-    public void SetPin(int Code){
-        PlayerBankPin = Code;
-    }
 
     public void SetMoney(int Amount){
         Money = Amount;
 
-        PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
+        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), player);
     }
 
     public void AddMoney(int Amount)
     {
         Money += (Amount * (MoneyUtils.Multiplier));
 
-        PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
+        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), player);
     }
 
     public void RemoveMoney(int Amount){
@@ -111,7 +92,7 @@ public class InfoStorage implements IExtendedEntityProperties
         if(Money < 0)
             Money = 0;
 
-        PacketHandler.sendToPlayer(Economy.channels, new SyncPlayerPropsPacket(player), (EntityPlayerMP) player);
+        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), player);
 
     }
 
@@ -125,9 +106,6 @@ public class InfoStorage implements IExtendedEntityProperties
     }
 
 
-    public int GetPinCode(){
-        return PlayerBankPin;
-    }
 
 
 }

@@ -1,17 +1,14 @@
 package com.eco.Economy.Gui;
 
-import com.eco.Economy.Lib.InfoStorage;
-import com.eco.Economy.Lib.MoneyUtils;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import org.lwjgl.opengl.GL11;
+import com.eco.Economy.Lib.*;
+import cpw.mods.fml.common.eventhandler.*;
+import cpw.mods.fml.relauncher.*;
+import net.minecraft.client.*;
+import net.minecraft.client.entity.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.util.*;
+import net.minecraftforge.client.event.*;
+import org.lwjgl.opengl.*;
 
 public class MoneyOverlay extends GuiIngame {
 
@@ -63,23 +60,23 @@ public class MoneyOverlay extends GuiIngame {
 
         if(MoneyUtils.TextArea == 1){
             x = width - 40;
-            y = 15;
+            y = 5;
         }else if (MoneyUtils.TextArea == 2){
             x = 40;
-            y = 15;
+            y = 5;
         }else if (MoneyUtils.TextArea == 3){
             x = width - 40;
-            y = height - 15;
+            y = height - 5;
         }else if (MoneyUtils.TextArea == 4){
             x = 40;
-            y = height - 15;
+            y = height - 5;
 
         }else{
             x = width - 40;
-            y = 15;
+            y = 5;
         }
 
-        String Pre = MoneyUtils.MoneyMark;
+        String Pre = EnumChatFormatting.DARK_GREEN + MoneyUtils.MoneyMark;
 
         if(Money < 10000){
             if(Money < 1000){
@@ -102,8 +99,6 @@ public class MoneyOverlay extends GuiIngame {
             this.drawCenteredString(this.mc.fontRenderer, Pre + Money, x, y, 0xffffff);
         }
 
-
-        this.drawCenteredString(this.mc.fontRenderer, StatCollector.translateToLocal("gui.overlay.pin") + " " + money.GetPinCode(), x, y - 10, 0xffffff);
 
 
 

@@ -1,7 +1,7 @@
 package com.eco.Economy.Gui;
 
-import com.eco.Economy.Container.SafeInvContainer;
-import com.eco.Economy.TileEntitys.TileEntitySafe;
+import com.eco.Economy.Container.*;
+import com.eco.Economy.TileEntitys.*;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +18,16 @@ public class GuiHandler implements IGuiHandler {
         if(tile_entity instanceof TileEntitySafe)
             return new SafeInvContainer(player.inventory, (TileEntitySafe)tile_entity);
 
+        if(tile_entity instanceof TileEntityATM)
+            return new AtmContainer(player.inventory, (TileEntityATM)tile_entity);
+
+        if(tile_entity instanceof TileEntityPlayerShop){
+            if(ID == 1)
+                return new ContainerPlayerShopCreator(player.inventory, (TileEntityPlayerShop)tile_entity);
+            else
+                return new ContainerPlayerShopUser(player.inventory, (TileEntityPlayerShop)tile_entity);
+        }
+
         return null;
     }
 
@@ -32,6 +42,16 @@ public class GuiHandler implements IGuiHandler {
 
         if(tile_entity instanceof TileEntitySafe)
             return new GuiSafe(player.inventory, (TileEntitySafe)tile_entity);
+
+        if(tile_entity instanceof TileEntityATM)
+            return new GuiATM(player.inventory, (TileEntityATM)tile_entity);
+
+        if(tile_entity instanceof TileEntityPlayerShop){
+            if(ID == 1)
+                return new GuiPlayerShopCreator(player.inventory, (TileEntityPlayerShop)tile_entity);
+            else
+                return new GuiPlayerShopUser(player.inventory, (TileEntityPlayerShop)tile_entity);
+        }
 
         return null;
     }

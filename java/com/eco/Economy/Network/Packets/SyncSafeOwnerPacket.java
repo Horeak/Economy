@@ -1,16 +1,12 @@
 package com.eco.Economy.Network.Packets;
 
-import com.eco.Economy.Network.AbstractPacket;
-import com.eco.Economy.TileEntitys.TileEntitySafe;
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.relauncher.Side;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import com.eco.Economy.Network.*;
+import com.eco.Economy.TileEntitys.*;
+import cpw.mods.fml.common.network.*;
+import cpw.mods.fml.relauncher.*;
+import io.netty.buffer.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.world.*;
 
 public class SyncSafeOwnerPacket extends AbstractPacket {
 
@@ -36,7 +32,7 @@ public class SyncSafeOwnerPacket extends AbstractPacket {
 
 
     @Override
-    public void writeTo(ByteBuf data, Side side) {
+    public void toBytes(ByteBuf data, Side side) {
         data.writeInt(x);
         data.writeInt(y);
         data.writeInt(z);
@@ -45,7 +41,7 @@ public class SyncSafeOwnerPacket extends AbstractPacket {
     }
 
     @Override
-    public void readFrom(ByteBuf data, Side side) {
+    public void fromBytes(ByteBuf data, Side side) {
         x = data.readInt();
         y = data.readInt();
         z = data.readInt();
@@ -56,7 +52,7 @@ public class SyncSafeOwnerPacket extends AbstractPacket {
     }
 
     @Override
-    public void execute(Side side, EntityPlayer player) {
+    public void onMessage(Side side, EntityPlayer player) {
 
         World world = player.getEntityWorld();
 

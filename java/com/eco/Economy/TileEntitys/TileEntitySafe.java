@@ -47,13 +47,13 @@ public class TileEntitySafe extends TileEntity implements IInventory {
            if (Open || tile.Open) {
 
                if (DoorRotate > -2) {
-                   DoorRotate -= 0.01;
+                   DoorRotate -= 0.03;
                }
 
            } else if (!Open && !tile.Open) {
 
                if (DoorRotate < 0)
-                   DoorRotate += 0.01;
+                   DoorRotate += 0.03;
            }
 
        }

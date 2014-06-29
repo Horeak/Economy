@@ -1,13 +1,16 @@
 package com.eco.Economy.Network;
 
-import com.miscitems.MiscItemsAndBlocks.Utils.Handlers.*;
-import cpw.mods.fml.common.network.*;
-import cpw.mods.fml.relauncher.*;
-import io.netty.buffer.*;
-import io.netty.channel.*;
-import net.minecraft.client.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.network.*;
+import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.INetHandler;
+import net.minecraft.network.NetHandlerPlayServer;
 
 public class ChannelHandler extends FMLIndexedMessageToMessageCodec<AbstractPacket>
 {
@@ -28,7 +31,7 @@ public class ChannelHandler extends FMLIndexedMessageToMessageCodec<AbstractPack
     @Override
     public void encodeInto(ChannelHandlerContext ctx, AbstractPacket msg, ByteBuf target) throws Exception
     {
-        LogHandler.Debug("Writing packet!!!", 2);
+
                  msg.toBytes(target, ctx.channel().attr(NetworkRegistry.CHANNEL_SOURCE).get());
     }
 
@@ -36,7 +39,6 @@ public class ChannelHandler extends FMLIndexedMessageToMessageCodec<AbstractPack
     public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, AbstractPacket msg)
     {
 
-        LogHandler.Debug("Reading packet!!!", 2);
                 msg.fromBytes(source, ctx.channel().attr(NetworkRegistry.CHANNEL_SOURCE).get());
     }
 

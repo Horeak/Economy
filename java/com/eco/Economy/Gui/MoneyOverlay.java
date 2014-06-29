@@ -35,7 +35,7 @@ public class MoneyOverlay extends GuiIngame {
     @SideOnly(Side.CLIENT)
     public void renderOverlay()
     {
-        ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+        ScaledResolution scaledresolution = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
         int width = scaledresolution.getScaledWidth();
         int height = scaledresolution.getScaledHeight();
 

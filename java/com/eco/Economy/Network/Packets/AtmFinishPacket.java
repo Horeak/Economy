@@ -28,7 +28,7 @@ public class AtmFinishPacket extends AbstractPacket {
     @Override
     public void fromBytes(ByteBuf buffer, Side side) {
         amount = buffer.readInt();
-        player = FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().getPlayerForUsername(ByteBufUtils.readUTF8String(buffer));
+        player = FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().func_152612_a(ByteBufUtils.readUTF8String(buffer));
 
     }
 

@@ -1,6 +1,7 @@
 package com.eco.Economy.Container;
 
-import com.eco.Economy.Lib.*;
+import com.eco.Economy.InvSlots.SlotNoInput;
+import com.eco.Economy.InvSlots.SlotPlayShopCreator;
 import com.eco.Economy.TileEntitys.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;

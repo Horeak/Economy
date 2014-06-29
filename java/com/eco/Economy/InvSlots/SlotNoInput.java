@@ -1,4 +1,4 @@
-package com.eco.Economy.Lib;
+package com.eco.Economy.InvSlots;
 
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;

@@ -1,6 +1,6 @@
 package com.eco.Economy.Container;
 
-import com.eco.Economy.Lib.*;
+import com.eco.Economy.InvSlots.SlotNoTake;
 import com.eco.Economy.TileEntitys.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;

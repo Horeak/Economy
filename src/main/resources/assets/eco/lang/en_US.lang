@@ -20,6 +20,9 @@ gui.playerShop.text.out=Out
 gui.playershop.text.payment=Payment
 gui.playershop.text.offer=Offer
 
+config.el.Client=Client Settings
+config.el.Server=Server Settings
+
 message.safe.wrongOwner=This safe belongs to $Owner$!
 message.atm.moneySent=The money has been sent from your account.
 

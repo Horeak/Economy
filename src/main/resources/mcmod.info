@@ -1,6 +1,6 @@
 [
 {
-  "modid": "eco",
+  "modid": "Eco",
   "name": "Economy",
   "description": "This is a mod which is meant to add a Economy system to minecraft",
   "version": "@VERSION@",

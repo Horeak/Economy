@@ -20,14 +20,21 @@ gui.playerShop.text.out=Out
 gui.playershop.text.payment=Payment
 gui.playershop.text.offer=Offer
 
+//Config
 config.el.Client=Client Settings
 config.el.Server=Server Settings
+config.el.Blocks=Blocks
+config.el.Items=Items
+config.el.Client.tooltip=Client side settings.
+config.el.Server.tooltip=Server side settings.
+config.el.Blocks.tooltip=Enable/Disable blocks.
+config.el.Items.tooltip=Enable/Disable Items.
 
 message.safe.wrongOwner=This safe belongs to $Owner$!
 message.atm.moneySent=The money has been sent from your account.
 
 message.currency.worth=A $cur$ worth $amo$$monMark$
-message.currency.worthCustomCurrency=in $curName$
+message.currency.worthCustomCurrency= in $curName$
 message.currency.bill=bill
 message.currency.coin=coin
 messages.creditCard.owner=Your credit card pin code is: $pin$

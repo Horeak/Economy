@@ -1,10 +1,15 @@
 package com.eco.Economy.Items;
 
-import com.eco.Economy.Items.Currency.Bills.*;
+import com.eco.Economy.Items.Currency.Bills.Bill100;
+import com.eco.Economy.Items.Currency.Bills.Bill1000;
+import com.eco.Economy.Items.Currency.Bills.Bill200;
+import com.eco.Economy.Items.Currency.Bills.Bill50;
+import com.eco.Economy.Items.Currency.Bills.Bill500;
 import com.eco.Economy.Items.Currency.Coins.Coin1;
 import com.eco.Economy.Items.Currency.Coins.Coin10;
 import com.eco.Economy.Items.Currency.Coins.Coin20;
 import com.eco.Economy.Items.Currency.Coins.Coin5;
+import com.eco.Economy.Lib.Config.ConfigUtils;
 import com.eco.Economy.Lib.ModInfo;
 import com.eco.Economy.Main.Economy;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -64,19 +69,27 @@ public class ModItemRegistry {
 
     public static void RegisterCurrency(Item Item, String Name, String TextureName){
 
+        ConfigUtils.ItemConfigNames.put(Item, Name);
+
+        if(ConfigUtils.IsItemEnabled(Item)) {
             Item.setUnlocalizedName((Name));
             GameRegistry.registerItem(Item, (Name));
             Item.setCreativeTab(Economy.ModTab);
             Item.setTextureName(ModInfo.ModTextures + ":" + "currency/" + TextureName);
+        }
 
     }
 
 
     public static void RegisterItem(Item Item, String Name){
 
-        Item.setUnlocalizedName((Name));
-        GameRegistry.registerItem(Item, (Name));
-        Item.setCreativeTab(Economy.ModTab);
+        ConfigUtils.ItemConfigNames.put(Item, Name);
+
+        if(ConfigUtils.IsItemEnabled(Item)) {
+            Item.setUnlocalizedName((Name));
+            GameRegistry.registerItem(Item, (Name));
+            Item.setCreativeTab(Economy.ModTab);
+        }
 
     }
 }

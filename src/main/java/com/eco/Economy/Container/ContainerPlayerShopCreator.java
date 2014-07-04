@@ -5,6 +5,7 @@ import com.eco.Economy.InvSlots.SlotPlayShopCreator;
 import com.eco.Economy.TileEntitys.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
+import net.minecraft.item.ItemStack;
 
 public class ContainerPlayerShopCreator extends Container {
 
@@ -53,6 +54,10 @@ public class ContainerPlayerShopCreator extends Container {
     }
 
 
+    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    {
+        return null;
+    }
 
 
 

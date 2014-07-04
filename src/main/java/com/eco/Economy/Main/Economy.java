@@ -9,6 +9,7 @@ import com.eco.Economy.Event.PreventBlockBreakEvent;
 import com.eco.Economy.Gui.GuiHandler;
 import com.eco.Economy.Gui.MoneyOverlay;
 import com.eco.Economy.Items.ModItemRegistry;
+import com.eco.Economy.Lib.Config.ConfigUtils;
 import com.eco.Economy.Lib.ModInfo;
 import com.eco.Economy.Lib.MoneyUtils;
 import com.eco.Economy.Lib.Strings;
@@ -31,10 +32,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
-import java.io.File;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -63,8 +61,6 @@ public class Economy {
     };
 
 
-    public static Configuration config;
-
     public static EnumMap<Side, FMLEmbeddedChannel> channels;
 
     public static ChannelHandler handler = new ChannelHandler(ModInfo.Channel);
@@ -73,42 +69,12 @@ public class Economy {
     public void preInit(FMLPreInitializationEvent event)
     {
 
-
-        config = new Configuration(new File(event.getModConfigurationDirectory() + "/tm1990's mods/Economy.cfg"));
-
-
-        if(event.getSide() == Side.CLIENT){
-        MoneyUtils.MoneyMark = config.get("Client Settings", "What sign should be used for money?", "$").getString();
-
-
-            Property textArea = config.get("Client Settings", "Where on the screen should the money be showed?", 1);
-            textArea.comment = "top_right = 1 \\n  top_left = 2  bottom_right = 3  bottom_left = 4  Mode";
-
-
-        MoneyUtils.TextArea = config.get("Client Settings", "Where on the screen should the money be showed?", 1).getInt();
-        MoneyUtils.CurrencyName = config.get("Client Settings", "What should the currency be called? (null for nothing)(default=null)", "null").getString();
-
-        }
-
-
-
-
-        MoneyUtils.Multiplier = config.get("Server Settings", "What should be the multiplier for money? (used for changing currency)", 1).getInt();
-        MoneyUtils.StarterMoney = config.get("Server Settings", "What amount of money should new players start with?", 1000).getInt();
-        MoneyUtils.MaxMoneyTransfer = config.get("Server Settings", "What should the max amount of money being transferred at once be?", 100000).getInt();
-        MoneyUtils.MaxPinLength = config.get("Server Settings", "What should the max length of the ban pin code be?(Max 24)", 4).getInt();
-
-
-
-
-
+        ConfigUtils.IntitConfig(event.getModConfigurationDirectory() + "/tm1990's mods/Economy.cfg");
 
 
 
         if(MoneyUtils.Multiplier < 1)
             MoneyUtils.Multiplier = 1;
-
-        config.save();
 
 
         PacketHandler.RegisterPackets();
@@ -126,6 +92,8 @@ public class Economy {
         MinecraftForge.EVENT_BUS.register(new EntityConstructingEvent());
         MinecraftForge.EVENT_BUS.register(new JoinWorld());
         MinecraftForge.EVENT_BUS.register(new OnPlayerRespawn());
+
+        FMLCommonHandler.instance().bus().register(new ConfigUtils());
 
         if(event.getSide() == Side.SERVER)
             RegisterServerEvents();

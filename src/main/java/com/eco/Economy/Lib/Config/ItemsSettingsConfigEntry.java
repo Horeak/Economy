@@ -11,9 +11,9 @@ import net.minecraftforge.common.config.ConfigElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerSettingsConfigEntry extends CategoryEntry
+public class ItemsSettingsConfigEntry extends CategoryEntry
 {
-    public ServerSettingsConfigEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop)
+    public ItemsSettingsConfigEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop)
     {
         super(owningScreen, owningEntryList, prop);
     }
@@ -23,12 +23,12 @@ public class ServerSettingsConfigEntry extends CategoryEntry
     {
         List<IConfigElement> list = new ArrayList<IConfigElement>();
 
-        list.addAll((new ConfigElement(ConfigUtils.GetConfig().getCategory(ConfigUtils.CATEGORY_SERVER_SETTINGS.toLowerCase()))).getChildElements());
+        list.addAll((new ConfigElement(ConfigUtils.GetConfig().getCategory(ConfigUtils.CATEGORY_ITEMS.toLowerCase()))).getChildElements());
 
-        return new GuiConfig(this.owningScreen, list, this.owningScreen.modID, "server settings eco",
+        return new GuiConfig(this.owningScreen, list, this.owningScreen.modID, "items",
                 this.configElement.requiresWorldRestart() || this.owningScreen.allRequireWorldRestart,
-                this.configElement.requiresMcRestart() || this.owningScreen.allRequireMcRestart,
+                true || this.owningScreen.allRequireMcRestart,
                 GuiConfig.getAbridgedConfigPath(ConfigUtils.GetConfig().toString()),
-                I18n.format("config.el.Server"));
+                I18n.format("config.el.Items"));
     }
 }

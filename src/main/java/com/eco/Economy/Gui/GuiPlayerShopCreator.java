@@ -1,7 +1,7 @@
 package com.eco.Economy.Gui;
 
 import com.eco.Economy.Container.*;
-import com.eco.Economy.Lib.*;
+import com.eco.Economy.Utils.*;
 import com.eco.Economy.TileEntitys.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.inventory.*;

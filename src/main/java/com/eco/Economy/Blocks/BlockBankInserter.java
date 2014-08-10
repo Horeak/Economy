@@ -1,7 +1,7 @@
 package com.eco.Economy.Blocks;
 
 import com.eco.Economy.Items.Currency.*;
-import com.eco.Economy.Lib.*;
+import com.eco.Economy.Utils.*;
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
 import net.minecraft.entity.player.*;

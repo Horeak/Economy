@@ -1,7 +1,7 @@
 package com.eco.Economy.Gui;
 
 import com.eco.Economy.Container.SafeInvContainer;
-import com.eco.Economy.Lib.MoneyUtils;
+import com.eco.Economy.Utils.MoneyUtils;
 import com.eco.Economy.TileEntitys.TileEntitySafe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;

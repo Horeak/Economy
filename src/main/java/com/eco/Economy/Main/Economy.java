@@ -1,6 +1,7 @@
 package com.eco.Economy.Main;
 
 
+import MiscUtils.Network.ChannelUtils;
 import com.eco.Economy.Blocks.ModBlockRegistry;
 import com.eco.Economy.Event.EntityConstructingEvent;
 import com.eco.Economy.Event.JoinWorld;
@@ -9,13 +10,15 @@ import com.eco.Economy.Event.PreventBlockBreakEvent;
 import com.eco.Economy.Gui.GuiHandler;
 import com.eco.Economy.Gui.MoneyOverlay;
 import com.eco.Economy.Items.ModItemRegistry;
-import com.eco.Economy.Lib.Config.ConfigUtils;
-import com.eco.Economy.Lib.ModInfo;
-import com.eco.Economy.Lib.MoneyUtils;
-import com.eco.Economy.Lib.Strings;
-import com.eco.Economy.Network.ChannelHandler;
-import com.eco.Economy.Network.PacketHandler;
-import com.eco.Economy.Proxies.ServerProxy;
+import com.eco.Economy.Network.AtmFinishPacket;
+import com.eco.Economy.Network.PacketTileUpdate;
+import com.eco.Economy.Network.PacketTileWithItemUpdate;
+import com.eco.Economy.Network.SyncPlayerPropsPacket;
+import com.eco.Economy.Network.SyncSafeOwnerPacket;
+import com.eco.Economy.Utils.Config;
+import com.eco.Economy.Utils.ModInfo;
+import com.eco.Economy.Utils.MoneyUtils;
+import com.eco.Economy.Utils.Proxies.ServerProxy;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -29,25 +32,23 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.EnumMap;
-import java.util.Map;
 
 
-@Mod(modid = ModInfo.ModId, name = ModInfo.ModName, version = ModInfo.ModVersion, guiFactory = "com.eco.Economy.Lib.Config.GuiConfigFactory")
+@Mod(modid = ModInfo.ModId, name = ModInfo.ModName, version = ModInfo.ModVersion, dependencies = "required-after:MiscUtils")
 public class Economy {
 
     @Mod.Instance(ModInfo.ModId)
     public static Economy instance = new Economy();
 
 
-    @SidedProxy(clientSide = "com.eco.Economy.Proxies.ClientProxy", serverSide = "com.eco.Economy.Proxies.ServerProxy")
+    @SidedProxy(clientSide = "com.eco.Economy.Utils.Proxies.ClientProxy", serverSide = "com.eco.Economy.Utils.Proxies.ServerProxy")
     public static ServerProxy proxy;
 
 
+    public static Config config;
 
     public static net.minecraft.creativetab.CreativeTabs ModTab = new net.minecraft.creativetab.CreativeTabs("tabEconomy")
     {
@@ -62,23 +63,25 @@ public class Economy {
 
 
     public static EnumMap<Side, FMLEmbeddedChannel> channels;
-
-    public static ChannelHandler handler = new ChannelHandler(ModInfo.Channel);
+    public static ChannelUtils Utils;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
 
-        ConfigUtils.IntitConfig(event.getModConfigurationDirectory() + "/tm1990's mods/Economy.cfg");
+        Utils = new ChannelUtils(ModInfo.Channel, ModInfo.ModId);
+        RegisterPackets();
+        channels = Utils.getNewChannelHandler();
 
+
+
+        config = new Config(event.getModConfigurationDirectory() + "");
 
 
         if(MoneyUtils.Multiplier < 1)
             MoneyUtils.Multiplier = 1;
 
 
-        PacketHandler.RegisterPackets();
-        channels = getNewChannelHandler(handler.channel);
 
         ModBlockRegistry.Register();
         ModItemRegistry.Register();
@@ -93,7 +96,6 @@ public class Economy {
         MinecraftForge.EVENT_BUS.register(new JoinWorld());
         MinecraftForge.EVENT_BUS.register(new OnPlayerRespawn());
 
-        FMLCommonHandler.instance().bus().register(new ConfigUtils());
 
         if(event.getSide() == Side.SERVER)
             RegisterServerEvents();
@@ -126,6 +128,20 @@ public class Economy {
     }
 
 
+    public static void RegisterPackets(){
+
+
+        Utils.handler.RegisterPacket(SyncPlayerPropsPacket.class);
+        Utils.handler.RegisterPacket(SyncSafeOwnerPacket.class);
+        Utils.handler.RegisterPacket(AtmFinishPacket.class);
+
+        Utils.handler.RegisterPacket(PacketTileUpdate.class);
+        Utils.handler.RegisterPacket(PacketTileWithItemUpdate.class);
+
+
+
+    }
+
     public void RegisterServerEvents(){
 
 
@@ -148,57 +164,8 @@ public class Economy {
     }
 
 
-    public static EnumMap<Side, FMLEmbeddedChannel> getNewChannelHandler(String modId)
-    {
-
-        EnumMap<Side, FMLEmbeddedChannel> handlers = NetworkRegistry.INSTANCE.newChannel(modId, handler);
-
-        ChannelHandler.PacketExecuter executer = new ChannelHandler.PacketExecuter();
-
-        for(Map.Entry<Side, FMLEmbeddedChannel> e : handlers.entrySet())
-        {
-            FMLEmbeddedChannel channel = e.getValue();
-            String codec = channel.findChannelHandlerNameForType(ChannelHandler.class);
-            channel.pipeline().addAfter(codec, "PacketExecuter", executer);
-        }
-
-        return handlers;
-    }
 
 
-    public static void setColor(ItemStack itemStack, int color) {
 
-        if (itemStack != null) {
-
-            NBTTagCompound nbtTagCompound = itemStack.getTagCompound();
-
-            if (nbtTagCompound == null) {
-
-                nbtTagCompound = new NBTTagCompound();
-                itemStack.setTagCompound(nbtTagCompound);
-            }
-
-            NBTTagCompound colourTagCompound = nbtTagCompound.getCompoundTag(Strings.NBT_ITEM_DISPLAY);
-
-            if (!nbtTagCompound.hasKey(Strings.NBT_ITEM_DISPLAY)) {
-                nbtTagCompound.setTag(Strings.NBT_ITEM_DISPLAY, colourTagCompound);
-            }
-
-            colourTagCompound.setInteger(Strings.NBT_ITEM_COLOR, color);
-        }
-    }
-
-    public static int getColor(ItemStack itemStack) {
-
-        NBTTagCompound nbtTagCompound = itemStack.getTagCompound();
-
-        if (nbtTagCompound == null)
-            return Integer.parseInt("ffffff", 16);
-        else {
-
-            NBTTagCompound displayTagCompound = nbtTagCompound.getCompoundTag(Strings.NBT_ITEM_DISPLAY);
-            return displayTagCompound == null ? Integer.parseInt("ffffff", 16) : displayTagCompound.hasKey(Strings.NBT_ITEM_COLOR) ? displayTagCompound.getInteger(Strings.NBT_ITEM_COLOR) : Integer.parseInt("ffffff", 16);
-        }
-    }
 
     }

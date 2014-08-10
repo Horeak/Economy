@@ -1,15 +1,15 @@
 package com.eco.Economy.Event;
 
-import com.eco.Economy.Lib.*;
-import com.eco.Economy.Main.*;
-import com.eco.Economy.Network.*;
-import com.eco.Economy.Network.Packets.*;
-import com.eco.Economy.Proxies.*;
-import cpw.mods.fml.common.eventhandler.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.nbt.*;
-import net.minecraftforge.event.entity.*;
-import net.minecraftforge.event.entity.living.*;
+import MiscUtils.Network.PacketHandler;
+import com.eco.Economy.Main.Economy;
+import com.eco.Economy.Network.SyncPlayerPropsPacket;
+import com.eco.Economy.Utils.InfoStorage;
+import com.eco.Economy.Utils.Proxies.ServerProxy;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
 public class OnPlayerRespawn{
 
@@ -43,7 +43,7 @@ public void onEntityJoinWorld(EntityJoinWorldEvent event)
         if (playerData != null) {
         ((InfoStorage)(event.entity.getExtendedProperties(InfoStorage.EXT_PROP_NAME))).loadNBTData(playerData);
         }
-            PacketHandler.sendToPlayer(new SyncPlayerPropsPacket((EntityPlayer) event.entity), (EntityPlayer) event.entity);
+            PacketHandler.sendToPlayer(new SyncPlayerPropsPacket((EntityPlayer) event.entity), (EntityPlayer) event.entity, Economy.channels);
         }
 
 

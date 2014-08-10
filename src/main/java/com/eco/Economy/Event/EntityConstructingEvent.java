@@ -1,6 +1,6 @@
 package com.eco.Economy.Event;
 
-import com.eco.Economy.Lib.InfoStorage;
+import com.eco.Economy.Utils.InfoStorage;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityEvent;

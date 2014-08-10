@@ -1,7 +1,7 @@
 package com.eco.Economy.Blocks;
 
-import com.eco.Economy.Lib.ChatMessageHandler;
-import com.eco.Economy.Lib.ModInfo;
+import com.eco.Economy.Utils.ChatMessageHandler;
+import com.eco.Economy.Utils.ModInfo;
 import com.eco.Economy.Main.Economy;
 import com.eco.Economy.TileEntitys.TileEntitySafe;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;

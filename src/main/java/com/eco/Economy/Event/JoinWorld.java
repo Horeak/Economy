@@ -1,10 +1,11 @@
 package com.eco.Economy.Event;
 
-import com.eco.Economy.Network.*;
-import com.eco.Economy.Network.Packets.*;
-import cpw.mods.fml.common.eventhandler.*;
-import net.minecraft.entity.player.*;
-import net.minecraftforge.event.entity.*;
+import MiscUtils.Network.PacketHandler;
+import com.eco.Economy.Main.Economy;
+import com.eco.Economy.Network.SyncPlayerPropsPacket;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
 public class JoinWorld {
 
@@ -14,6 +15,6 @@ public class JoinWorld {
     {
 
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer)
-            PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(((EntityPlayer) event.entity)), (EntityPlayer) event.entity);
+            PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(((EntityPlayer) event.entity)), (EntityPlayer) event.entity, Economy.channels);
     }
 }

@@ -1,6 +1,6 @@
 package com.eco.Economy.Items.Currency;
 
-import com.eco.Economy.Lib.MoneyUtils;
+import com.eco.Economy.Utils.MoneyUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

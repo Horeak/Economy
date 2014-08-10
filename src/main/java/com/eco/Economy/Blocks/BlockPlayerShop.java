@@ -1,6 +1,6 @@
 package com.eco.Economy.Blocks;
 
-import com.eco.Economy.Lib.*;
+import com.eco.Economy.Utils.*;
 import com.eco.Economy.Main.*;
 import com.eco.Economy.TileEntitys.*;
 import cpw.mods.fml.common.network.internal.*;

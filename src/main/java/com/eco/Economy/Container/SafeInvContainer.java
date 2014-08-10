@@ -1,6 +1,6 @@
 package com.eco.Economy.Container;
 
-import com.eco.Economy.InvSlots.SafeSlot;
+import com.eco.Economy.Container.InvSlots.SafeSlot;
 import com.eco.Economy.TileEntitys.TileEntitySafe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

@@ -1,6 +1,6 @@
 package com.eco.Economy.Gui;
 
-import com.eco.Economy.Lib.*;
+import com.eco.Economy.Utils.*;
 import cpw.mods.fml.common.eventhandler.*;
 import cpw.mods.fml.relauncher.*;
 import net.minecraft.client.*;

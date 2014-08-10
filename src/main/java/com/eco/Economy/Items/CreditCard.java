@@ -1,6 +1,6 @@
 package com.eco.Economy.Items;
 
-import com.eco.Economy.Lib.*;
+import com.eco.Economy.Utils.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;

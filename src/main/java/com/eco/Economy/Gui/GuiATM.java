@@ -1,17 +1,24 @@
 package com.eco.Economy.Gui;
 
-import com.eco.Economy.Container.*;
-import com.eco.Economy.Items.*;
-import com.eco.Economy.Lib.*;
-import com.eco.Economy.Network.*;
-import com.eco.Economy.Network.Packets.*;
-import com.eco.Economy.TileEntitys.*;
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.inventory.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.util.*;
-import org.lwjgl.opengl.*;
+import MiscUtils.Network.PacketHandler;
+import com.eco.Economy.Container.AtmContainer;
+import com.eco.Economy.Items.CreditCard;
+import com.eco.Economy.Main.Economy;
+import com.eco.Economy.Network.AtmFinishPacket;
+import com.eco.Economy.TileEntitys.TileEntityATM;
+import com.eco.Economy.Utils.ChatMessageHandler;
+import com.eco.Economy.Utils.InfoStorage;
+import com.eco.Economy.Utils.ModInfo;
+import com.eco.Economy.Utils.MoneyUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
 
 public class GuiATM extends GuiContainer {
 
@@ -169,7 +176,7 @@ public class GuiATM extends GuiContainer {
                 }
             }else if (Mode == "money"){
 
-                PacketHandler.sendToServer(new AtmFinishPacket(CurrentNumber, mc.thePlayer));
+                PacketHandler.sendToServer(new AtmFinishPacket(CurrentNumber, mc.thePlayer), Economy.channels);
 
                 Mode = "";
                 CurrentNumber = 0;

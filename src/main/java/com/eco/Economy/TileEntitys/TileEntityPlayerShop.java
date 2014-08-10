@@ -1,12 +1,12 @@
 package com.eco.Economy.TileEntitys;
 
-import com.eco.Economy.Main.*;
-import com.eco.Economy.Network.*;
-import com.eco.Economy.Network.Packets.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.*;
-import net.minecraftforge.common.util.*;
+import MiscUtils.Network.PacketHandler;
+import com.eco.Economy.Main.Economy;
+import com.eco.Economy.Network.PacketTileWithItemUpdate;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityPlayerShop extends TileEntityInvBase {
     public TileEntityPlayerShop() {
@@ -146,7 +146,7 @@ public class TileEntityPlayerShop extends TileEntityInvBase {
         ItemStack itemStack = getStackInSlot(1);
 
         if (itemStack != null && itemStack.stackSize > 0)
-            return PacketHandler.GetPacket(new PacketTileWithItemUpdate(xCoord, yCoord, zCoord, ForgeDirection.UP, (byte)0, null, itemStack.getItem().getIdFromItem(itemStack.getItem()), itemStack.getItemDamage(), itemStack.stackSize, Economy.getColor(itemStack)));
+            return PacketHandler.GetPacket(new PacketTileWithItemUpdate(xCoord, yCoord, zCoord, ForgeDirection.UP, (byte) 0, null, itemStack.getItem().getIdFromItem(itemStack.getItem()), itemStack.getItemDamage(), itemStack.stackSize, 0), Economy.channels);
         else
             return super.getDescriptionPacket();
     }

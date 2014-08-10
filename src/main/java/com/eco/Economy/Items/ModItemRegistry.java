@@ -1,5 +1,6 @@
 package com.eco.Economy.Items;
 
+import MiscUtils.Utils.Register.ItemRegister;
 import com.eco.Economy.Items.Currency.Bills.Bill100;
 import com.eco.Economy.Items.Currency.Bills.Bill1000;
 import com.eco.Economy.Items.Currency.Bills.Bill200;
@@ -9,8 +10,7 @@ import com.eco.Economy.Items.Currency.Coins.Coin1;
 import com.eco.Economy.Items.Currency.Coins.Coin10;
 import com.eco.Economy.Items.Currency.Coins.Coin20;
 import com.eco.Economy.Items.Currency.Coins.Coin5;
-import com.eco.Economy.Lib.Config.ConfigUtils;
-import com.eco.Economy.Lib.ModInfo;
+import com.eco.Economy.Utils.ModInfo;
 import com.eco.Economy.Main.Economy;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
@@ -25,6 +25,7 @@ public class ModItemRegistry {
 
     public static void Register(){
 
+        ItemRegister Utils = new ItemRegister(Economy.config, ModInfo.ModId);
 
 
 
@@ -59,7 +60,7 @@ public class ModItemRegistry {
         RegisterCurrency(Bill1000, "&1000 " + StatCollector.translateToLocal("message.currency.bill"), "bill_1000");
 
         CreditCard = new CreditCard().setTextureName(ModInfo.ModTextures + ":CreditCard");
-        RegisterItem(CreditCard, "creditcard");
+        Utils.Register(CreditCard, "creditcard");
 
 
 
@@ -69,26 +70,13 @@ public class ModItemRegistry {
 
     public static void RegisterCurrency(Item Item, String Name, String TextureName){
 
-        ConfigUtils.ItemConfigNames.put(Item, Name);
+        Economy.config.ItemConfigNames.put(Item, Name);
 
-        if(ConfigUtils.IsItemEnabled(Item)) {
+        if(Economy.config.IsItemEnabled(Item)) {
             Item.setUnlocalizedName((Name));
             GameRegistry.registerItem(Item, (Name));
             Item.setCreativeTab(Economy.ModTab);
             Item.setTextureName(ModInfo.ModTextures + ":" + "currency/" + TextureName);
-        }
-
-    }
-
-
-    public static void RegisterItem(Item Item, String Name){
-
-        ConfigUtils.ItemConfigNames.put(Item, Name);
-
-        if(ConfigUtils.IsItemEnabled(Item)) {
-            Item.setUnlocalizedName((Name));
-            GameRegistry.registerItem(Item, (Name));
-            Item.setCreativeTab(Economy.ModTab);
         }
 
     }

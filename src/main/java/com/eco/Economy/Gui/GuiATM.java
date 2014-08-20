@@ -176,7 +176,7 @@ public class GuiATM extends GuiContainer {
                 }
             }else if (Mode == "money"){
 
-                PacketHandler.sendToServer(new AtmFinishPacket(CurrentNumber, mc.thePlayer), Economy.channels);
+                PacketHandler.sendToServer(new AtmFinishPacket(CurrentNumber, mc.thePlayer), Economy.Utils.channels);
 
                 Mode = "";
                 CurrentNumber = 0;

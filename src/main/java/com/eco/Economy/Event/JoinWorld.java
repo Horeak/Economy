@@ -15,6 +15,6 @@ public class JoinWorld {
     {
 
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer)
-            PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(((EntityPlayer) event.entity)), (EntityPlayer) event.entity, Economy.channels);
+            PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(((EntityPlayer) event.entity)), (EntityPlayer) event.entity, Economy.Utils.channels);
     }
 }

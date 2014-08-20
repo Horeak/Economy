@@ -1,6 +1,6 @@
 package com.eco.Economy.Items;
 
-import MiscUtils.Utils.Register.ItemRegister;
+import MiscUtils.Register.ItemRegister;
 import com.eco.Economy.Items.Currency.Bills.Bill100;
 import com.eco.Economy.Items.Currency.Bills.Bill1000;
 import com.eco.Economy.Items.Currency.Bills.Bill200;

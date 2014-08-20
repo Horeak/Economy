@@ -72,7 +72,7 @@ public class ServerProxy {
         NBTTagCompound savedData = ServerProxy.getEntityData(getSaveKey(player));
         if (savedData != null) { playerData.loadNBTData(savedData); }
 
-        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), (EntityPlayerMP) player, Economy.channels);
+        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), (EntityPlayerMP) player, Economy.Utils.channels);
     }
 
 

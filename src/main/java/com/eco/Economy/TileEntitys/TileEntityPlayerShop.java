@@ -146,7 +146,7 @@ public class TileEntityPlayerShop extends TileEntityInvBase {
         ItemStack itemStack = getStackInSlot(1);
 
         if (itemStack != null && itemStack.stackSize > 0)
-            return PacketHandler.GetPacket(new PacketTileWithItemUpdate(xCoord, yCoord, zCoord, ForgeDirection.UP, (byte) 0, null, itemStack.getItem().getIdFromItem(itemStack.getItem()), itemStack.getItemDamage(), itemStack.stackSize, 0), Economy.channels);
+            return PacketHandler.GetPacket(new PacketTileWithItemUpdate(xCoord, yCoord, zCoord, ForgeDirection.UP, (byte) 0, null, itemStack.getItem().getIdFromItem(itemStack.getItem()), itemStack.getItemDamage(), itemStack.stackSize, 0), Economy.Utils.channels);
         else
             return super.getDescriptionPacket();
     }

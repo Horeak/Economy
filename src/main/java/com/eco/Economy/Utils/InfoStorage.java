@@ -77,14 +77,14 @@ public class InfoStorage implements IExtendedEntityProperties
     public void SetMoney(int Amount){
         Money = Amount;
 
-        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), player, Economy.channels);
+        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), player, Economy.Utils.channels);
     }
 
     public void AddMoney(int Amount)
     {
         Money += (Amount * (MoneyUtils.Multiplier));
 
-        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), player, Economy.channels);
+        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), player, Economy.Utils.channels);
     }
 
     public void RemoveMoney(int Amount){
@@ -93,7 +93,7 @@ public class InfoStorage implements IExtendedEntityProperties
         if(Money < 0)
             Money = 0;
 
-        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), player, Economy.channels);
+        PacketHandler.sendToPlayer(new SyncPlayerPropsPacket(player), player, Economy.Utils.channels);
 
     }
 

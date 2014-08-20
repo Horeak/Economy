@@ -43,7 +43,7 @@ public void onEntityJoinWorld(EntityJoinWorldEvent event)
         if (playerData != null) {
         ((InfoStorage)(event.entity.getExtendedProperties(InfoStorage.EXT_PROP_NAME))).loadNBTData(playerData);
         }
-            PacketHandler.sendToPlayer(new SyncPlayerPropsPacket((EntityPlayer) event.entity), (EntityPlayer) event.entity, Economy.channels);
+            PacketHandler.sendToPlayer(new SyncPlayerPropsPacket((EntityPlayer) event.entity), (EntityPlayer) event.entity, Economy.Utils.channels);
         }
 
 

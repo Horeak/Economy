@@ -26,15 +26,12 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
-
-import java.util.EnumMap;
 
 
 @Mod(modid = ModInfo.ModId, name = ModInfo.ModName, version = ModInfo.ModVersion, dependencies = "required-after:MiscUtils")
@@ -62,7 +59,6 @@ public class Economy {
     };
 
 
-    public static EnumMap<Side, FMLEmbeddedChannel> channels;
     public static ChannelUtils Utils;
 
     @EventHandler
@@ -71,7 +67,6 @@ public class Economy {
 
         Utils = new ChannelUtils(ModInfo.Channel, ModInfo.ModId);
         RegisterPackets();
-        channels = Utils.getNewChannelHandler();
 
 
 

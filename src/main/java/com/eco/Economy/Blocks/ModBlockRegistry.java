@@ -1,6 +1,6 @@
 package com.eco.Economy.Blocks;
 
-import MiscUtils.Utils.Register.BlockRegister;
+import MiscUtils.Register.BlockRegister;
 import com.eco.Economy.Items.ItemBlocks.ItemBlockATM;
 import com.eco.Economy.Items.ItemBlocks.ItemBlockSafe;
 import com.eco.Economy.Main.Economy;

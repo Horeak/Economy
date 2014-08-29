@@ -10,36 +10,22 @@ import java.io.File;
 
 public class Config extends ConfigBase {
 
-    protected Configuration config;
 
+    public static final String CATEGORY_CLIENT_SETTINGS = "Client Settings";
+    public static final String CATEGORY_SERVER_SETTINGS = "Server Settings";
 
 
     public Config(String Loc){
-
-        config = new Configuration(new File(Loc + "/tm1990's mods/Economy.cfg"));
+        super(new Configuration(new File(Loc + "/tm1990's mods/Economy.cfg")));
         InitConfig();
     }
 
-    @Override
-    public Configuration GetConfigFile() {
-        return config;
-    }
 
     @Override
     public void InitConfig() {
 
-        config.addCustomCategoryComment(CATEGORY_CLIENT_SETTINGS, "Client side only settings. Settings that does not affect gameplay");
-        config.addCustomCategoryComment(CATEGORY_SERVER_SETTINGS, "Server side settings which can affect gameplay");
-
-        config.addCustomCategoryComment(CATEGORY_BLOCKS, "This allows you to enabled/disable the different blocks from the mod");
-        config.addCustomCategoryComment(CATEGORY_ITEMS, "This allows you to enabled/disable the different items from the mod");
-
-        config.addCustomCategoryComment(CATEGORY_WORLDGEN, "This allows you to disable and change different world generation types");
-
-        config.setCategoryRequiresMcRestart(CATEGORY_BLOCKS, true);
-        config.setCategoryRequiresMcRestart(CATEGORY_ITEMS, true);
-
-        config.setCategoryRequiresMcRestart(CATEGORY_WORLDGEN, true);
+        RegisterCategory(CATEGORY_CLIENT_SETTINGS, "Client side only settings. Settings that does not affect gameplay");
+        RegisterCategory(CATEGORY_SERVER_SETTINGS, "Server side settings which can affect gameplay");
 
         LoadConfig();
     }
@@ -49,23 +35,23 @@ public class Config extends ConfigBase {
 
 
         //Client Settings
-        MoneyUtils.MoneyMark = config.get(CATEGORY_CLIENT_SETTINGS, "What sign should be used for money?", "$").getString();
+        MoneyUtils.MoneyMark = GetConfigFile().get(CATEGORY_CLIENT_SETTINGS, "What sign should be used for money?", "$").getString();
 
-        Property textArea = config.get(CATEGORY_CLIENT_SETTINGS, "Where on the screen should the money be showed?", 1);
+        Property textArea = GetConfigFile().get(CATEGORY_CLIENT_SETTINGS, "Where on the screen should the money be showed?", 1);
         textArea.comment = "Top right = 1, Top left = 2,  Bottom right = 3,  Bottom left = 4";
 
-        MoneyUtils.CurrencyName = config.get(CATEGORY_CLIENT_SETTINGS, "What should the currency be called? (null for nothing)(default=null)", "null").getString();
+        MoneyUtils.CurrencyName = GetConfigFile().get(CATEGORY_CLIENT_SETTINGS, "What should the currency be called? (null for nothing)(default=null)", "null").getString();
 
 
 
         //Server Settings
-        MoneyUtils.Multiplier = config.get(CATEGORY_SERVER_SETTINGS, "What should be the multiplier for money? (used for changing currency)", 1).getInt();
-        MoneyUtils.StarterMoney = config.get(CATEGORY_SERVER_SETTINGS, "What amount of money should new players start with?", 1000).getInt();
-        MoneyUtils.MaxMoneyTransfer = config.get(CATEGORY_SERVER_SETTINGS, "What should the max amount of money being transferred at once be?", 100000).getInt();
-        MoneyUtils.MaxPinLength = config.get(CATEGORY_SERVER_SETTINGS, "What should the max length of the bank pin code be?(Max 24)", 4).getInt();
+        MoneyUtils.Multiplier = GetConfigFile().get(CATEGORY_SERVER_SETTINGS, "What should be the multiplier for money? (used for changing currency)", 1).getInt();
+        MoneyUtils.StarterMoney = GetConfigFile().get(CATEGORY_SERVER_SETTINGS, "What amount of money should new players start with?", 1000).getInt();
+        MoneyUtils.MaxMoneyTransfer = GetConfigFile().get(CATEGORY_SERVER_SETTINGS, "What should the max amount of money being transferred at once be?", 100000).getInt();
+        MoneyUtils.MaxPinLength = GetConfigFile().get(CATEGORY_SERVER_SETTINGS, "What should the max length of the bank pin code be?(Max 24)", 4).getInt();
 
-        if(config.hasChanged())
-            config.save();
+        if(GetConfigFile().hasChanged())
+            GetConfigFile().save();
     }
 
     public  boolean IsBlockEnabled(Block block){

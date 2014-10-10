@@ -88,7 +88,6 @@ public class Economy {
 
 
         MinecraftForge.EVENT_BUS.register(new EntityConstructingEvent());
-        MinecraftForge.EVENT_BUS.register(new JoinWorld());
         MinecraftForge.EVENT_BUS.register(new OnPlayerRespawn());
 
 
@@ -143,6 +142,7 @@ public class Economy {
         FMLCommonHandler.instance().bus().register(proxy.tickHandlerServer);
 
         MinecraftForge.EVENT_BUS.register(new PreventBlockBreakEvent());
+        MinecraftForge.EVENT_BUS.register(new JoinWorld());
 
 
 

@@ -59,7 +59,7 @@ public class ModItemRegistry {
         Bill1000 = new Bill1000();
         RegisterCurrency(Bill1000, "&1000 " + StatCollector.translateToLocal("message.currency.bill"), "bill_1000");
 
-        CreditCard = new CreditCard().setTextureName(ModInfo.ModTextures + ":CreditCard");
+        CreditCard = new CreditCard().setTextureName(ModInfo.ModTextures + ":CreditCard").setCreativeTab(Economy.ModTab);
         Utils.Register(CreditCard, "creditcard");
 
 

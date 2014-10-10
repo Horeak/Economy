@@ -25,19 +25,19 @@ public class ModBlockRegistry {
 
 
 
-        ATM = new BlockATM();
+        ATM = new BlockATM().setCreativeTab(Economy.ModTab);
         Utils.Register(ATM, ItemBlockATM.class, "ATM", TileEntityATM.class);
 
-        Safe = new BlockSafe();
+        Safe = new BlockSafe().setCreativeTab(Economy.ModTab);
         Utils.Register(Safe, ItemBlockSafe.class, "Safe", TileEntitySafe.class);
 
-        BankInserter = new BlockBankInserter().setBlockTextureName(ModInfo.ModTextures + ":Inserter");
+        BankInserter = new BlockBankInserter().setBlockTextureName(ModInfo.ModTextures + ":Inserter").setCreativeTab(Economy.ModTab);
         Utils.Register(BankInserter, "BankInserter");
 
-        PlayerShop = new BlockPlayerShop();
+        PlayerShop = new BlockPlayerShop().setCreativeTab(Economy.ModTab);
         Utils.Register(PlayerShop, "PlayerShop", TileEntityPlayerShop.class);
 
-        PlayerShopGlass = new BlockPlayerShopGlass().setBlockTextureName(ModInfo.ModTextures + ":PlayerShopGlass");
+        PlayerShopGlass = new BlockPlayerShopGlass().setBlockTextureName(ModInfo.ModTextures + ":PlayerShopGlass").setCreativeTab(Economy.ModTab);
         Utils.Register(PlayerShopGlass, "PlayerShopGlass");
 
 

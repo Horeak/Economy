@@ -16,7 +16,7 @@ public class Config extends ConfigBase {
 
 
     public Config(String Loc){
-        super(new Configuration(new File(Loc + "/tm1990's mods/Economy.cfg")));
+        super(new Configuration(new File(Loc + "/MiscUtils mods/Economy.cfg")));
         InitConfig();
     }
 
